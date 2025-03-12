@@ -2,6 +2,7 @@ import WaitlistForm from "@/components/waitlist-form"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Calendar, CheckCircle } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Home() {
   return (
@@ -10,8 +11,14 @@ export default function Home() {
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-2">
-              <Calendar className="h-6 w-6 text-black" />
-              <span className="text-xl font-bold">fevo</span>
+              <Image
+                  src="/logo.png"
+                  alt="Fevo"
+                  width={300}
+                  height={150}
+                  className="h-24 w-auto"
+                  priority
+                />
             </div>
             <nav className="hidden md:flex items-center gap-6">
               <Link href="#features" className="text-sm font-medium text-gray-600 hover:text-black">
@@ -291,8 +298,14 @@ export default function Home() {
       <footer className="w-full border-t border-gray-200 bg-white py-6 md:py-12">
         <div className="container flex flex-col items-center justify-between gap-4 px-4 md:flex-row md:px-6">
           <div className="flex items-center gap-2">
-            <Calendar className="h-6 w-6 text-black" />
-            <span className="text-xl font-bold">fevo</span>
+          <Image
+                  src="/logo.png"
+                  alt="Fevo"
+                  width={300}
+                  height={100}
+                  className="h-20 w-auto"
+                  priority
+                />
           </div>
           <nav className="flex gap-4 sm:gap-6">
             <Link href="#" className="text-xs text-gray-500 hover:text-black">
