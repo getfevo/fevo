@@ -32,9 +32,6 @@ export function RegisterForm({
         email: values.email,
         password: values.password,
         name: values.name,
-        emailVerified: false,
-        createdAt: now,
-        updatedAt: now,
       });
       toast.success("Please check your email for verification.");
       router.push("/dashboard");
