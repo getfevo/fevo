@@ -37,7 +37,7 @@ export default function WaitlistForm({ isDark = false }: WaitlistFormProps) {
       setIsSubmitted(true);
       setEmail("");
     } catch (err) {
-      setError("Something went wrong. Please try again.");
+      setError("Something went wrong.");
     } finally {
       setIsSubmitting(false);
     }
