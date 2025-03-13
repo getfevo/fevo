@@ -7,12 +7,10 @@ export async function getCurrentUser(): Promise<User> {
     id: "user-1",
     name: "Alex Johnson",
     email: "alex@example.com",
-    avatar: "/placeholder.svg?height=128&width=128",
-    joinDate: "2023-01-15",
-    booksRead: 37,
-    booksToRead: 24,
-    currentlyReading: "The Midnight Library by Matt Haig",
-    favoriteGenres: ["Science Fiction", "Mystery", "Biography"],
+    image: "/placeholder.svg?height=128&width=128",
+    emailVerified: true,
+    createdAt: new Date("2023-01-01T00:00:00Z"),
+    updatedAt: new Date("2023-05-01T00:00:00Z"),
   }
 }
 
