@@ -1,0 +1,1 @@
+ALTER TABLE "early_access" ALTER COLUMN "id" SET DEFAULT gen_random_uuid();

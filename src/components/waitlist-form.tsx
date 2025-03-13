@@ -19,20 +19,29 @@ export default function WaitlistForm({ isDark = false }: WaitlistFormProps) {
   const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setError(null)
-
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+  
     try {
-      await submitToWaitlist(email)
-      setIsSubmitted(true)
-      setEmail("")
+      const response = await fetch("/api/auth/early_access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to join the waitlist.");
+      }
+  
+      setIsSubmitted(true);
+      setEmail("");
     } catch (err) {
-      setError("Something went wrong. Please try again.")
+      setError("Something went wrong. Please try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   if (isSubmitted) {
     return (
