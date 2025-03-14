@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter, useSearchParams } from "next/navigation";
-import { signUp, signIn } from "@/lib/authClient";
+import { authClient } from "@/lib/authClient"
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -30,7 +30,7 @@ export function RegisterForm({
     setIsSubmitting(true);
     const now = new Date().toISOString();
     try {
-      await signUp.email({
+      await authClient.signUp.email({
         email: values.email,
         password: values.password,
         name: values.name,
@@ -104,7 +104,7 @@ export function RegisterForm({
                   className="w-full"
                   onClick={async () => {
                     try {
-                      await signIn.social({
+                      await authClient.signIn.social({
                         provider: "apple",
                         callbackURL: callbackUrl,
                       });
@@ -130,7 +130,7 @@ export function RegisterForm({
                   className="w-full"
                   onClick={async () => {
                     try {
-                      await signIn.social({
+                      await authClient.signIn.social({
                         provider: "google",
                         callbackURL: callbackUrl,
                       });

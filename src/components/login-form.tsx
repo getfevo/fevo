@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter, useSearchParams } from "next/navigation";
-import { signIn } from "@/lib/authClient";
+import { authClient } from "@/lib/authClient"
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -29,12 +29,13 @@ export function LoginForm({
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await signIn.email({
+      await authClient.signIn.email({
         email: values.email,
         password: values.password,
+        callbackURL: "/dashboard",
       });
       toast.success("Login successful. Redirecting...");
-      router.push(callbackUrl);
+      //router.push(callbackUrl);
     } catch (error: any) {
       console.error(error);
       toast.error(error.message || "Invalid credentials. Please try again.");
@@ -99,7 +100,7 @@ export function LoginForm({
                   type="button"
                   onClick={async () => {
                     try {
-                      await signIn.social({ 
+                      await authClient.signIn.social({ 
                         provider: "apple",
                         callbackURL: callbackUrl
                       });
@@ -124,7 +125,7 @@ export function LoginForm({
                   type="button"
                   onClick={async () => {
                     try {
-                      await signIn.social({ 
+                      await authClient.signIn.social({ 
                         provider: "google",
                         callbackURL: callbackUrl
                       });

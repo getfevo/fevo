@@ -27,15 +27,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useAuth } from "@/hooks/use-auth"
+import { authClient } from "@/lib/authClient"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user, isAuthenticated, isLoading, error } = useAuth();
-  console.log("User:", user);
-  console.log("Is authenticated:", isAuthenticated);
-  console.log("Is loading:", isLoading);
-  console.log("Auth error:", error);
+  const { data: session } = authClient.useSession();
+
+  console.log("User:", session?.user);
+
   const [selectedCompany, setSelectedCompany] = React.useState("Acme Inc");
 
   const companies = [
@@ -150,31 +149,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       <SidebarFooter>
-        {isLoading ? (
-          <div className="flex items-center p-3">
-            <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse mr-2"></div>
-            <div className="flex-1">
-              <div className="h-4 bg-gray-200 rounded animate-pulse mb-1 w-24"></div>
-              <div className="h-3 bg-gray-200 rounded animate-pulse w-32"></div>
-            </div>
-          </div>
-        ) : (
+
           <NavUser
-            user={
-              isAuthenticated && user
-                ? {
-                    name: user.name,
-                    email: user.email,
-                    avatar: user.image || "/default-avatar.png",
-                  }
-                : {
-                    name: "Guest",
-                    email: "guest@example.com",
-                    avatar: "/default-avatar.png",
-                  }
-            }
+            user={{
+              name: session?.user?.name || "Guest",
+              email: session?.user?.email || "guest@example.com",
+              avatar: session?.user?.image || "/default-avatar.png",
+            }}
           />
-        )}
+        
       </SidebarFooter>
     </Sidebar>
   )
