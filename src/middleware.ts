@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
 		const response = NextResponse.redirect(new URL("/login", request.url));
 
 		// Prevent caching issues
-		response.headers.set("Cache-Control", "no-store");
+		//response.headers.set("Cache-Control", "no-store");
 
 		return response;
 	}
