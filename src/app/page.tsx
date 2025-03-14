@@ -3,42 +3,12 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Calendar, CheckCircle } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import Header from "@/components/header"
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="border-b border-gray-200 bg-white">
-        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Image
-                  src="/logo.png"
-                  alt="Fevo"
-                  width={300}
-                  height={150}
-                  className="h-24 w-auto"
-                  priority
-                />
-            </div>
-            <nav className="hidden md:flex items-center gap-6">
-              <Link href="#features" className="text-sm font-medium text-gray-600 hover:text-black">
-                Features
-              </Link>
-              <Link href="#how-it-works" className="text-sm font-medium text-gray-600 hover:text-black">
-                How It Works
-              </Link>
-              <Link href="#faq" className="text-sm font-medium text-gray-600 hover:text-black">
-                FAQ
-              </Link>
-            </nav>
-            <div className="flex items-center gap-4">
-              <Link href="/register" className="text-sm font-medium text-gray-600 hover:text-black hidden sm:block">
-                Sign In
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main className="flex-1">
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 bg-white">
