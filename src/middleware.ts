@@ -8,6 +8,11 @@ export async function middleware(request: NextRequest) {
 		cookiePrefix: "better-auth",
     });
 
+		// Debugging Logs
+		console.log("Middleware triggered on:", request.url);
+		console.log("Session Cookie:", session);
+		console.log("Request Headers:", request.headers);
+
 	// Check if session exists
 	if (!session) {
 		const response = NextResponse.redirect(new URL("/login", request.url));
