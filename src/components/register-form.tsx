@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signUp, signIn } from "@/lib/authClient";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -15,6 +15,8 @@ export function RegisterForm({
 }: React.ComponentProps<"div">) {
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
   const [values, setValues] = useState({ name: "", email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -34,7 +36,7 @@ export function RegisterForm({
         name: values.name,
       });
       toast.success("Please check your email for verification.");
-      router.push("/dashboard");
+      router.push(callbackUrl);
     } catch (error: any) {
       console.error(error);
       toast.error(error.message || "Something went wrong. Please try again.");
@@ -104,7 +106,7 @@ export function RegisterForm({
                     try {
                       await signIn.social({
                         provider: "apple",
-                        callbackURL: "/dashboard",
+                        callbackURL: callbackUrl,
                       });
                       toast.success("Signed up with Apple. Redirecting...");
                     } catch (error: any) {
@@ -130,7 +132,7 @@ export function RegisterForm({
                     try {
                       await signIn.social({
                         provider: "google",
-                        callbackURL: "/dashboard",
+                        callbackURL: callbackUrl,
                       });
                       toast.success("Signed up with Google. Redirecting...");
                     } catch (error: any) {
@@ -150,7 +152,7 @@ export function RegisterForm({
               </div>
               <div className="text-center text-sm">
                 Already have an account?{" "}
-                <a href="/register" className="underline underline-offset-4">
+                <a href="/login" className="underline underline-offset-4">
                   Sign in
                 </a>
               </div>

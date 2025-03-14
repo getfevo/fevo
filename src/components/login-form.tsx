@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "@/lib/authClient";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -15,6 +15,8 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
   const [values, setValues] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -32,7 +34,7 @@ export function LoginForm({
         password: values.password,
       });
       toast.success("Login successful. Redirecting...");
-      router.push("/dashboard");
+      router.push(callbackUrl);
     } catch (error: any) {
       console.error(error);
       toast.error(error.message || "Invalid credentials. Please try again.");
@@ -97,9 +99,11 @@ export function LoginForm({
                   type="button"
                   onClick={async () => {
                     try {
-                      await signIn.social({ provider: "apple" });
+                      await signIn.social({ 
+                        provider: "apple",
+                        callbackURL: callbackUrl
+                      });
                       toast.success("Logged in with Apple. Redirecting...");
-                      router.push("/dashboard");
                     } catch (error: any) {
                       console.error(error);
                       toast.error(error.message || "Apple login failed. Please try again.");
@@ -120,7 +124,10 @@ export function LoginForm({
                   type="button"
                   onClick={async () => {
                     try {
-                      await signIn.social({ provider: "google" , callbackURL: "/dashboard" });
+                      await signIn.social({ 
+                        provider: "google",
+                        callbackURL: callbackUrl
+                      });
                       toast.success("Logged in with Google. Redirecting...");
                     } catch (error: any) {
                       console.error(error);

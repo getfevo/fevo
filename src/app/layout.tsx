@@ -3,7 +3,6 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { Analytics } from '@vercel/analytics/next';
-import { SessionProvider } from "@/providers/session-provider";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,10 +21,8 @@ export default function RootLayout({
       <head>
       </head>
       <body className={inter.className}>
-        <SessionProvider>
-          {children}
-          <Analytics />
-        </SessionProvider>
+        {children}
+        <Analytics />
       </body>
     </html>
   )
