@@ -4,14 +4,16 @@ import { ArrowRight, Calendar, CheckCircle } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import Header from "@/components/header"
+import FeatureRequestListLanding from "@/components/featureRequestListLanding"
+
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-gray-100 ">
       <Header />
-      <main className="flex-1">
+      <main className="flex-1 self-center">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 bg-white">
+        <section className="w-350 py-12 md:py-24 lg:py-32 xl:py-40 bg-white mt-10 rounded-lg">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
               <div className="flex flex-col justify-center space-y-4">
@@ -30,10 +32,9 @@ export default function Home() {
                 </div>
                 <div className="space-y-4 pt-4">
                   <WaitlistForm />
-                
                 </div>
               </div>
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center ">
                 <div className="relative w-full h-[400px] overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
                   <div className="absolute top-0 left-0 right-0 bg-gray-50 p-4 border-b border-gray-200">
                     <div className="flex items-center">
@@ -46,34 +47,24 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className="pt-20 px-4">
-                    <div className="space-y-4">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="rounded-lg border border-gray-200 p-4 bg-white">
-                          <div className="flex justify-between">
-                            <h3 className="font-medium">Feature Request #{i}</h3>
-                            <span className="text-sm bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Planned</span>
-                          </div>
-                          <p className="text-sm text-gray-500 mt-1">
-                            This is a sample feature request that users have voted on.
-                          </p>
-                          <div className="flex items-center mt-2 text-sm text-gray-500">
-                            <span className="flex items-center">
-                              <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                                />
-                              </svg>
-                              {12 + i * 8} votes
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <div className="flex items-center justify-center">
+  <div className="relative w-full h-[400px] overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+    <div className="absolute top-0 left-0 right-0 bg-gray-50 p-4 border-b border-gray-200">
+      <div className="flex items-center">
+        <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
+          F
+        </div>
+        <div className="ml-3">
+          <p className="font-medium">Feedback Portal</p>
+          <p className="text-sm text-gray-500">Product Roadmap</p>
+        </div>
+      </div>
+    </div>
+
+    {/* ✅ Use the new FeatureRequestList component */}
+    <FeatureRequestListLanding />
+  </div>
+</div>
                 </div>
               </div>
             </div>
@@ -81,7 +72,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-white mt-10 rounded-lg">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -93,7 +84,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
+            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12 ">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 text-black">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -154,7 +145,7 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
+        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-white mt-10 rounded-lg">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -197,7 +188,7 @@ export default function Home() {
         </section>
 
         {/* FAQ Section */}
-        <section id="faq" className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <section id="faq" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 mt-10 rounded-lg">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -242,7 +233,7 @@ export default function Home() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-white">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-white mt-10 rounded-lg">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -250,16 +241,13 @@ export default function Home() {
                   Ready to transform your feedback process?
                 </h2>
                 <p className="max-w-[600px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Join our waitlist today and be the first to experience our platform when we launch.
+                  Join our waitlist today and be the first to experience our platform when we launch!
                 </p>
               </div>
               <div className="w-full max-w-sm">
                 <WaitlistForm isDark={true} />
               </div>
-              <div className="flex items-center space-x-2 text-sm">
-                <CheckCircle className="h-4 w-4" />
-                <span>No credit card required</span>
-              </div>
+              
             </div>
           </div>
         </section>
