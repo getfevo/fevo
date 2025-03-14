@@ -32,10 +32,9 @@ export default function Home() {
               </Link>
             </nav>
             <div className="flex items-center gap-4">
-            {/* <Link href="/register" className="text-sm font-medium text-gray-600 hover:text-black hidden sm:block">
+              <Link href="/register" className="text-sm font-medium text-gray-600 hover:text-black hidden sm:block">
                 Sign In
               </Link>
-              <Button className="bg-black text-white hover:bg-gray-800">Join Waitlist</Button> */}
             </div>
           </div>
         </div>

@@ -27,144 +27,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useSession} from "@/lib/authClient"
-
-
+import { useSession } from "@/lib/authClient"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data } = useSession();
 
-/*
-  const data = {
-    user: 
-        ? {
-            name: user.name,
-            email: user.email,
-            avatar: user.image || "/default-avatar.png", // Provide a default avatar if `image` is null
-          }
-        : {
-            name: "Guest",
-            email: "guest@example.com",
-            avatar: "/default-avatar.png", // Ensure a valid avatar is always present
-          },
-
-    navMain: [
-      {
-        title: "Playground",
-        url: "#",
-        icon: SquareTerminal,
-        isActive: true,
-        items: [
-          {
-            title: "History",
-            url: "#",
-          },
-          {
-            title: "Starred",
-            url: "#",
-          },
-          {
-            title: "Settings",
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: "Models",
-        url: "#",
-        icon: Bot,
-        items: [
-          {
-            title: "Genesis",
-            url: "#",
-          },
-          {
-            title: "Explorer",
-            url: "#",
-          },
-          {
-            title: "Quantum",
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: "Documentation",
-        url: "#",
-        icon: BookOpen,
-        items: [
-          {
-            title: "Introduction",
-            url: "#",
-          },
-          {
-            title: "Get Started",
-            url: "#",
-          },
-          {
-            title: "Tutorials",
-            url: "#",
-          },
-          {
-            title: "Changelog",
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: "Settings",
-        url: "#",
-        icon: Settings2,
-        items: [
-          {
-            title: "General",
-            url: "#",
-          },
-          {
-            title: "Team",
-            url: "#",
-          },
-          {
-            title: "Billing",
-            url: "#",
-          },
-          {
-            title: "Limits",
-            url: "#",
-          },
-        ],
-      },
-    ],
-    navSecondary: [
-      {
-        title: "Support",
-        url: "#",
-        icon: LifeBuoy,
-      },
-      {
-        title: "Feedback",
-        url: "#",
-        icon: Send,
-      },
-    ],
-    projects: [
-      {
-        name: "Design Engineering",
-        url: "#",
-        icon: Frame,
-      },
-      {
-        name: "Sales & Marketing",
-        url: "#",
-        icon: PieChart,
-      },
-      {
-        name: "Travel",
-        url: "#",
-        icon: Map,
-      },
-    ],
-}*/
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -184,27 +51,90 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
-  {/* <NavMain items={data.navMain} />
-      <NavProjects projects={data.projects} />
-      <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
+        {/* Directly pass hardcoded navigation items */}
+        <NavMain
+          items={[
+            {
+              title: "Playground",
+              url: "#",
+              icon: SquareTerminal,
+              isActive: true,
+              items: [
+                { title: "History", url: "#" },
+                { title: "Starred", url: "#" },
+                { title: "Settings", url: "#" },
+              ],
+            },
+            {
+              title: "Models",
+              url: "#",
+              icon: Bot,
+              items: [
+                { title: "Genesis", url: "#" },
+                { title: "Explorer", url: "#" },
+                { title: "Quantum", url: "#" },
+              ],
+            },
+            {
+              title: "Documentation",
+              url: "#",
+              icon: BookOpen,
+              items: [
+                { title: "Introduction", url: "#" },
+                { title: "Get Started", url: "#" },
+                { title: "Tutorials", url: "#" },
+                { title: "Changelog", url: "#" },
+              ],
+            },
+            {
+              title: "Settings",
+              url: "#",
+              icon: Settings2,
+              items: [
+                { title: "General", url: "#" },
+                { title: "Team", url: "#" },
+                { title: "Billing", url: "#" },
+                { title: "Limits", url: "#" },
+              ],
+            },
+          ]}
+        />
+
+        <NavProjects
+          projects={[
+            { name: "Design Engineering", url: "#", icon: Frame },
+            { name: "Sales & Marketing", url: "#", icon: PieChart },
+            { name: "Travel", url: "#", icon: Map },
+          ]}
+        />
+
+        <NavSecondary
+          items={[
+            { title: "Support", url: "#", icon: LifeBuoy },
+            { title: "Feedback", url: "#", icon: Send },
+          ]}
+          className="mt-auto"
+        />
       </SidebarContent>
+
       <SidebarFooter>
-      <NavUser
-  user={
-    data?.user
-      ? {
-          name: data.user.name,
-          email: data.user.email,
-          avatar: data.user.image || "/default-avatar.png",
-        }
-      : {
-          name: "Guest",
-          email: "guest@example.com",
-          avatar: "/default-avatar.png",
-        }
-  }
-/>
+        <NavUser
+          user={
+            data?.user
+              ? {
+                  name: data.user.name,
+                  email: data.user.email,
+                  avatar: data.user.image || "/default-avatar.png",
+                }
+              : {
+                  name: "Guest",
+                  email: "guest@example.com",
+                  avatar: "/default-avatar.png",
+                }
+          }
+        />
       </SidebarFooter>
     </Sidebar>
   )
