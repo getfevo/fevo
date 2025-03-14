@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import Header from "@/components/header"
 import FeatureRequestListLanding from "@/components/featureRequestListLanding"
-
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 
 export default function Home() {
   return (
@@ -13,13 +13,13 @@ export default function Home() {
       <Header />
       <main className="flex-1 self-center">
         {/* Hero Section */}
-        <section className="w-350 py-12 md:py-24 lg:py-32 xl:py-40 bg-white mt-10 rounded-lg">
+        <section className="w-350 py-12 md:py-24 lg:py-32 xl:py-40 bg-white mt-10 rounded-2xl shadow-sm">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
               <div className="flex flex-col justify-center space-y-4">
-                <div className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm">
-                  <span className="text-black">Coming Soon</span>
-                  <ArrowRight className="ml-1 h-4 w-4" />
+                <div className="inline-flex items-center rounded-full border border-gray-300 text-gray-700 px-3 py-1 text-sm font-medium">
+                  <ArrowRight className="mr-1 h-4 w-4 text-gray-500" />
+                  Coming Soon...
                 </div>
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-black">
@@ -72,7 +72,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-white mt-10 rounded-lg">
+        <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-white mt-10 rounded-2xl shadow-sm">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -145,7 +145,7 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-white mt-10 rounded-lg">
+        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-white mt-10 rounded-2xl shadow-sm">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -186,54 +186,54 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* FAQ Section */}
-        <section id="faq" className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 mt-10 rounded-lg">
+        
+         {/*FAQ Section */}
+        <section id="faq" className="w-full py-16 md:py-28 lg:py-36 bg-gray-100 mt-12 rounded-2xl">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-black">
+            <div className="flex flex-col items-center justify-center space-y-6 text-center">
+              <div className="space-y-4">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-black">
                   Frequently asked questions
                 </h2>
-                <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[1000px] text-gray-500 md:text-xl lg:text-lg xl:text-xl">
                   Everything you need to know about our upcoming platform.
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-3xl gap-6 py-12">
-              {[
-                {
-                  question: "How will I know when I get access?",
-                  answer:
-                    "We'll send you an email with instructions on how to access the platform once your spot on the waitlist is activated.",
-                },
-                {
-                  question: "Is there a cost to join the waitlist?",
-                  answer:
-                    "No, joining the waitlist is completely free. We'll share more information about our pricing model closer to launch.",
-                },
-                {
-                  question: "Will there be any benefits for early adopters?",
-                  answer:
-                    "Early adopters will receive exclusive features, priority support, and special perks as a thank you for joining us from the beginning.",
-                },
-                {
-                  question: "Can I request specific features?",
-                  answer:
-                    "Yes, we welcome feature requests from our waitlist members. Your feedback will help shape the future of our platform.",
-                },
-              ].map((item, i) => (
-                <div key={i} className="border-b border-gray-200 pb-6">
-                  <h3 className="text-lg font-medium text-black">{item.question}</h3>
-                  <p className="mt-2 text-gray-500">{item.answer}</p>
-                </div>
-              ))}
+
+            {/* Accordion FAQ */}
+            <div className="mx-auto max-w-4xl py-12">
+              <Accordion type="single" collapsible>
+                {[
+                  {
+                    question: "How will I know when I get access?",
+                    answer: "We'll send you an email with instructions on how to access the platform once your spot on the waitlist is activated.",
+                  },
+                  {
+                    question: "Is there a cost to join the waitlist?",
+                    answer: "No, joining the waitlist is completely free. We'll share more information about our pricing model closer to launch.",
+                  },
+                  {
+                    question: "Will there be any benefits for early adopters?",
+                    answer: "Early adopters will receive exclusive features, priority support, and special perks as a thank you for joining us from the beginning.",
+                  },
+                  {
+                    question: "Can I request specific features?",
+                    answer: "Yes, we welcome feature requests from our waitlist members. Your feedback will help shape the future of our platform.",
+                  },
+                ].map((item, i) => (
+                  <AccordionItem key={i} value={`item-${i}`}>
+                    <AccordionTrigger className="text-lg font-medium">{item.question}</AccordionTrigger>
+                    <AccordionContent className="text-gray-700 text-base">{item.answer}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
           </div>
         </section>
 
         {/* Final CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-white mt-10 rounded-lg">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-white mt-10 rounded-2xl shadow-sm">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
