@@ -13,7 +13,15 @@ export function middleware(request: NextRequest) {
     cookies?.get("better-auth.session_token") ||
     cookies?.get("__Secure-better-auth.session_token");
 
-  if (!sessionCookie) {
+  const requestUrl = new URL(request.url);
+
+  // Redirect authenticated users away from login page to dashboard
+  if (requestUrl.pathname === "/login" && sessionCookie) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  // Redirect unauthenticated users trying to access protected routes
+  if (!sessionCookie && requestUrl.pathname === "/dashboard") {
     const redirectResponse = NextResponse.redirect(
       new URL("/login", request.url)
     );
@@ -22,13 +30,9 @@ export function middleware(request: NextRequest) {
   }
 
   const response = NextResponse.next();
-  // Enable only to test the one tap login in localhost
-  //response.headers.set("Referrer-Policy", "no-referrer-when-downgrade");
   return response;
 }
 
 export const config = {
-  matcher: [
-    "/dashboard",
-  ],
+  matcher: ["/dashboard", "/login"],
 };
