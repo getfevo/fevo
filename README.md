@@ -1,4 +1,4 @@
-#fevo - Open Source way of collecting user feedback
+# fevo - Open Source way of collecting user feedback
 
 A modern, responsive dashboard application built with Next.js and React for managing product feedback and feature requests.
 
