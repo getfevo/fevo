@@ -96,7 +96,7 @@ export function LoginForm({
               <div className="grid grid-cols-2 gap-4">
                 <Button
                   variant="outline"
-                  className="w-full"
+                                  className="w-full opacity-50 cursor-not-allowed"
                   type="button"
                   onClick={async () => {
                     try {

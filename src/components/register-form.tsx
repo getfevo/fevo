@@ -101,7 +101,7 @@ export function RegisterForm({
                 <Button
                   variant="outline"
                   type="button"
-                  className="w-full"
+                                                    className="w-full opacity-50 cursor-not-allowed"
                   onClick={async () => {
                     try {
                       await authClient.signIn.social({
