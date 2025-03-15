@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useEffect } from "react"
 import {
   BookOpen,
   Bot,
@@ -14,7 +15,8 @@ import {
   Send,
   Settings2,
   SquareTerminal,
-  ListTodo
+  ListTodo,
+  Plus
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -35,18 +37,32 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Skeleton } from "@/components/ui/skeleton"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: session } = authClient.useSession();
+  const { data: session ,error} = authClient.useSession();
+  const [projects, setProjects] = React.useState<{ id: string; name: string }[]>([]);
+  const [selectedProject, setSelectedProject] = React.useState("");
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  console.log("User:", session?.user);
+  // Add effect to log when session changes
+  useEffect(() => {
+    console.log("Session updated:", session?.user?.name);
+  }, [session]);
 
-  const [selectedCompany, setSelectedCompany] = React.useState("Acme Inc");
-
-  const companies = [
-    { name: "Acme Inc", plan: "Enterprise" },
-    { name: "Globex Corp", plan: "Pro" },
-    { name: "Soylent Corp", plan: "Business" },
-    { name: "Initech", plan: "Startup" },
-  ];
+  useEffect(() => {
+    if (session?.user) {
+      console.log("Fetching projects for user:", session.user.id);
+      fetch(`/api/projects/${session.user.id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.projects) {
+            setProjects(data.projects);
+            if (data.projects.length > 0) {
+              setSelectedProject(data.projects[0].name);
+            }
+          }
+        })
+        .catch((error) => console.error("Error fetching projects:", error));
+    }
+  }, [session?.user?.id]);
 
   return (
     <Sidebar variant="inset" {...props}>
@@ -54,35 +70,46 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
           <Select
-              onValueChange={(value) => setSelectedCompany(value)}
-              value={selectedCompany}
+              onValueChange={(value) => {
+                if (value === 'new_project') {
+                  setIsModalOpen(true);
+                } else {
+                  setSelectedProject(value);
+                }
+              }}
+              value={selectedProject}
             >
               <SelectTrigger className="w-full flex items-center gap-2 p-2 rounded-lg bg-white text-black border border-gray-300 shadow-sm">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4 text-gray-700" />
                 </div>
                 <div className="flex-1 text-left text-sm leading-tight">
-                  <SelectValue placeholder="Select a company">
-                    {selectedCompany}
+                  <SelectValue placeholder="Select a project">
+                    {selectedProject}
                   </SelectValue>
-                  <span className="block text-xs text-gray-500">
-                    {companies.find((c) => c.name === selectedCompany)?.plan}
-                  </span>
                 </div>
               </SelectTrigger>
               <SelectContent className="bg-white text-black border border-gray-200 shadow-lg">
-                {companies.map((company) => (
+                {projects.map((project) => (
                   <SelectItem 
-                    key={company.name} 
-                    value={company.name} 
+                    key={project.id} 
+                    value={project.name} 
                     className="hover:bg-gray-100 text-black"
                   >
-                    {company.name} - <span className="text-xs text-gray-500">{company.plan}</span>
+                    {project.name}
                   </SelectItem>
                 ))}
+                <SelectItem 
+                  key="new_project" 
+                  value="new_project" 
+                  className="hover:bg-gray-100 text-black"
+                >
+                  New Project
+                </SelectItem>
               </SelectContent>
             </Select>
           </SidebarMenuItem>
+
         </SidebarMenu>
       </SidebarHeader>
 

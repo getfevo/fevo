@@ -52,3 +52,24 @@ export const earlyAccess = pgTable("early_access", {
 					createdAt: timestamp("created_at").notNull(),
 					updatedAt: timestamp("updated_at").notNull(),
 				  });
+
+export const project = pgTable("project", {
+					id: uuid("id").primaryKey().defaultRandom(),
+					userId: text("user_id").notNull().references(() => user.id, { onDelete: 'cascade' }),
+					name: text("name").notNull(),
+					description: text("description"),
+					createdAt: timestamp("created_at").notNull(),
+					updatedAt: timestamp("updated_at").notNull(),
+				  });
+				  
+export const feature_request = pgTable("feature_request", {
+					id: uuid("id").primaryKey().defaultRandom(),
+					projectId: uuid("project_id").notNull().references(() => project.id, { onDelete: 'cascade' }),
+					title: text("title").notNull(),
+					description: text("description"),
+					status: text("status").notNull(),
+					priority: integer("priority"),
+					createdBy: text("created_by").notNull().references(() => user.id, { onDelete: 'cascade' }),
+					createdAt: timestamp("created_at").notNull(),
+					updatedAt: timestamp("updated_at").notNull(),
+				  });

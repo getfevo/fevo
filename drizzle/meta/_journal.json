@@ -36,6 +36,13 @@
       "when": 1741889910024,
       "tag": "0004_little_supreme_intelligence",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1742040418002,
+      "tag": "0005_flaky_nova",
+      "breakpoints": true
     }
   ]
 }
