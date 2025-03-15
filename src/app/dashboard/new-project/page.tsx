@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {authClient} from "@/lib/authClient";
 
 export default function NewProjectPage() {
   const router = useRouter();
@@ -12,26 +13,31 @@ export default function NewProjectPage() {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { data: session } = authClient.useSession();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
+    const userId = session?.user.id; // Replace with actual user ID retrieval logic
+
     try {
       const response = await fetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, description }),
+        body: JSON.stringify({ userId, name, description }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to create project");
+        throw new Error(data.error || "Failed to create project");
       }
 
       router.push("/dashboard");
     } catch (err) {
-      setError("Could not create project. Please try again.");
+      setError((err as any).message || "Could not create project. Please try again.");
     } finally {
       setLoading(false);
     }

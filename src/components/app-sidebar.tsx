@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { useEffect } from "react"
+import { useRouter } from "next/navigation";
 import {
   BookOpen,
   Bot,
@@ -35,8 +36,10 @@ import {
 import { authClient } from "@/lib/authClient"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
+import { url } from "inspector";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const router = useRouter();
   const { data: session ,error} = authClient.useSession();
   const [projects, setProjects] = React.useState<{ id: string; name: string }[]>([]);
   const [selectedProject, setSelectedProject] = React.useState("");
@@ -72,7 +75,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <Select
               onValueChange={(value) => {
                 if (value === 'new_project') {
-                  setIsModalOpen(true);
+                  router.push("/dashboard/new-project");
                 } else {
                   setSelectedProject(value);
                 }
@@ -91,20 +94,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </SelectTrigger>
               <SelectContent className="bg-white text-black border border-gray-200 shadow-lg">
                 {projects.map((project) => (
-                  <SelectItem 
-                    key={project.id} 
-                    value={project.name} 
-                    className="hover:bg-gray-100 text-black"
-                  >
+                  <SelectItem key={project.id} value={project.name} className="hover:bg-gray-100 text-black">
                     {project.name}
                   </SelectItem>
                 ))}
+                
+                {/* Divider */}
+                <div className="border-t border-gray-300 my-1"></div>
+
                 <SelectItem 
                   key="new_project" 
                   value="new_project" 
-                  className="hover:bg-gray-100 text-black"
+                  className="hover:bg-gray-100 text-black bg-gray-50 font-semibold flex justify-between items-center"
+                  onClick={() => router.push("/dashboard/new-project")}
                 >
-                  New Project
+                  <span>New Project</span>
+                  <Plus className="size-4 ml-auto" />
                 </SelectItem>
               </SelectContent>
             </Select>
