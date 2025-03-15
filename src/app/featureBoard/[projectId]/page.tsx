@@ -10,21 +10,21 @@ import { FeatureRequestCard } from "@/components/featureRequestCard"
 
 const sampleFeatures = [
   {
-    id: 1,
+    id: "1",
     title: "AI feedback prioritization helper",
     description: "It would be great if we could get AI to automatically suggest new features...",
     category: "Feature Request",
     votes: 15,
   },
   {
-    id: 2,
+    id: "2",
     title: "Help Center Statistics",
     description: "I'd love to see a stats page about how many times people interact with our support center.",
     category: "Feedback",
     votes: 8,
   },
   {
-    id: 3,
+    id: "3",
     title: "User profile customization",
     description: "Allow users to customize their profiles with avatars and banners.",
     category: "Feature Request",

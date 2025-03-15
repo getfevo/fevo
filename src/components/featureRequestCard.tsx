@@ -2,7 +2,15 @@ import {Card, CardContent} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
 
-export function FeatureRequestCard({ feature }) {
+interface Feature {
+  id: string;
+  votes: number;
+  title: string;
+  description: string;
+  category: string;
+}
+
+export function FeatureRequestCard({ feature }: { feature: Feature }) {
     return (
       <Card key={feature.id} className="bg-white mb-4">
         <CardContent>

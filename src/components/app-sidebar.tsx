@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/sidebar"
 import { authClient } from "@/lib/authClient"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: session } = authClient.useSession();
@@ -127,17 +128,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           className="mt-auto"
         />
       </SidebarContent>
-
       <SidebarFooter>
-
+        {session ? (
           <NavUser
             user={{
-              name: session?.user?.name || "Guest",
-              email: session?.user?.email || "guest@example.com",
-              avatar: session?.user?.image || "/default-avatar.png",
+              name: session.user?.name,
+              email: session.user?.email,
+              avatar: session.user?.image || "/default-avatar.png",
             }}
           />
-        
+        ) : (
+          <div className="flex items-center gap-3 p-2">
+            <Skeleton className="w-10 h-10 rounded-full" /> {/* Avatar Skeleton */}
+            <div className="flex flex-col space-y-1">
+              <Skeleton className="w-24 h-4 min-h-[1rem]" /> {/* Adjusted Name Skeleton */}
+              <Skeleton className="w-32 h-3 min-h-[0.75rem]" /> {/* Adjusted Email Skeleton */}
+            </div>
+          </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   )
