@@ -6,12 +6,15 @@ import {
   Bot,
   Command,
   Frame,
+  Lamp,
   LifeBuoy,
+  Lightbulb,
   Map,
   PieChart,
   Send,
   Settings2,
   SquareTerminal,
+  ListTodo
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -86,36 +89,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain
           items={[
             {
-              title: "Playground",
+              title: "Dashboard",
               url: "#",
               icon: SquareTerminal,
               isActive: true,
-              items: [
-                { title: "History", url: "#" },
-                { title: "Starred", url: "#" },
-                { title: "Settings", url: "#" },
-              ],
+              
             },
             {
-              title: "Models",
+              title: "Idea Bord",
               url: "#",
-              icon: Bot,
-              items: [
-                { title: "Genesis", url: "#" },
-                { title: "Explorer", url: "#" },
-                { title: "Quantum", url: "#" },
-              ],
+              icon: Lightbulb,
             },
             {
-              title: "Documentation",
+              title: "Kanban",
               url: "#",
-              icon: BookOpen,
-              items: [
-                { title: "Introduction", url: "#" },
-                { title: "Get Started", url: "#" },
-                { title: "Tutorials", url: "#" },
-                { title: "Changelog", url: "#" },
-              ],
+              icon: ListTodo,
             },
             {
               title: "Settings",
@@ -128,14 +116,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 { title: "Limits", url: "#" },
               ],
             },
-          ]}
-        />
-
-        <NavProjects
-          projects={[
-            { name: "Design Engineering", url: "#", icon: Frame },
-            { name: "Sales & Marketing", url: "#", icon: PieChart },
-            { name: "Travel", url: "#", icon: Map },
           ]}
         />
 
