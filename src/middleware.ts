@@ -1,16 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
+import { type NextRequest, NextResponse } from "next/server"
 
 export async function middleware(request: NextRequest) {
-	//const cookies = getSessionCookie(request.headers.get("cookie"));
-	const cookies = request.headers.get("cookie")
-	console.log(cookies);
-	if (!cookies) {
-		return NextResponse.redirect(new URL("/", request.url));
-	}
-	return NextResponse.next();
+    // const sessionCookie = getSessionCookie(request) // Broken
+
+    if (!request.cookies.has("better-auth.session_token")) {
+        const redirectTo = request.nextUrl.pathname + request.nextUrl.search
+        return NextResponse.redirect(new URL(`/login`, request.url))
+    }
+
+    return NextResponse.next()
 }
 
 export const config = {
-	matcher: ["/dashboard"],
-};
+    matcher: ["/dashboard"]
+}
