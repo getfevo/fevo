@@ -67,9 +67,9 @@ export const feature_request = pgTable("feature_request", {
 					projectId: uuid("project_id").notNull().references(() => project.id, { onDelete: 'cascade' }),
 					title: text("title").notNull(),
 					description: text("description"),
-					status: text("status").notNull(),
+					status: text("status"),
 					priority: integer("priority"),
-					createdBy: text("created_by").notNull().references(() => user.id, { onDelete: 'cascade' }),
+					createdBy: text("created_by").references(() => user.id, { onDelete: 'cascade' }),
 					createdAt: timestamp("created_at").notNull(),
 					updatedAt: timestamp("updated_at").notNull(),
 				  });

@@ -1,0 +1,1 @@
+ALTER TABLE "feature_request" ALTER COLUMN "status" DROP NOT NULL;

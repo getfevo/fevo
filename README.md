@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+#fevo - Open Source way of collecting user feedback
+
+A modern, responsive dashboard application built with Next.js and React for managing product feedback and feature requests.
+
+## Overview
+
+This dashboard provides a comprehensive interface for product managers and teams to track user feedback, feature requests, and overall product metrics. It includes real-time statistics, feature request tracking, and user activity monitoring.
+
+## Features
+
+### 1. Analytics Overview
+- Collect Statistics:
+  - Total Feedback
+  - Active Users
+  - Feature Requests
+  - Implemented Features
+- Percentage changes tracked month-over-month
+
+### 2. Feature Request Management
+- Prioritized list of top feature requests
+- Status tracking (Planned, In-Progress, Completed)
+- Progress indicators for in-progress features
+- Categorization system
+- Vote and comment tracking
+
+### 3. User Activity Monitoring
+- Real-time activity feed
+- User interactions tracking
+- Timeline of recent actions
+- User profile integration
+
+### 4. Advanced Filtering
+- Time-based filtering (Today, Yesterday, Last 7/30/90 days)
+- Category-based filtering
+- Status-based filtering
+
+### 5. UI Components
+- Responsive layout
+- Search functionality
+- User notifications
+- Profile management
+- Interactive charts and graphs
+
+## Technical Stack
+
+- **Framework**: Next.js
+- **UI Components**: shadcn
+- **Icons**: Lucide React icons
+- **Styling**: Tailwind CSS
+
+## Layout Structure
+
+The dashboard follows a common layout pattern:
+- Top navigation bar with search and user controls
+- Sidebar for main navigation
+- Main content area with responsive grid layouts
+- Cards for displaying different data sections
+
+## Component Architecture
+
+The application is built using several key components:
+- `AppSidebar`: Main navigation sidebar
+- `Card` components for displaying statistics and data
+- `DropdownMenu` for various filtering options
+- `Avatar` for user profile displays
+- `Progress` bars for tracking feature implementation
+- `Badge` components for status indicators
+
+## Data Structure
+
+The dashboard uses structured data for:
+- Statistics tracking
+- Feature requests
+- User activity
+- Status management
+
+## Responsive Design
+
+The dashboard is fully responsive with:
+- Mobile-first approach
+- Flexible grid layouts
+- Adaptive component sizing
+- Breakpoint-specific optimizations
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run the development server
+```bash
+pnpm dev
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Open [http://localhost:3000](http://localhost:3000) to view the dashboard
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
