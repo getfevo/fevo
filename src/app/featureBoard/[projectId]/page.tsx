@@ -1,0 +1,172 @@
+"use client"
+
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+
+const sampleFeatures = [
+  {
+    id: 1,
+    title: "AI feedback prioritization helper",
+    description: "It would be great if we could get AI to automatically suggest new features...",
+    category: "Feature Request",
+    votes: 15,
+  },
+  {
+    id: 2,
+    title: "Help Center Statistics",
+    description: "I'd love to see a stats page about how many times people interact with our support center.",
+    category: "Feedback",
+    votes: 8,
+  },
+  {
+    id: 3,
+    title: "User profile customization",
+    description: "Allow users to customize their profiles with avatars and banners.",
+    category: "Feature Request",
+    votes: 20,
+  },
+];
+
+function FeatureRequestCard({ feature }) {
+  return (
+    <Card key={feature.id} className="bg-white mb-4">
+      <CardContent>
+        <div className="flex items-center">
+          <div className="mr-4 flex flex-col items-center">
+            <Button variant="outline" size="sm">▲</Button>
+            <span className="text-sm mt-1">{feature.votes}</span>
+          </div>
+          <div className="flex-1">
+            <h2 className="text-lg font-semibold">{feature.title}</h2>
+            <p className="text-sm text-muted-foreground">{feature.description}</p>
+          </div>
+          <Badge variant="outline">{feature.category}</Badge>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function NewPostDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="default" className="whitespace-nowrap">
+          Create a New Post
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create a New Post</DialogTitle>
+          <DialogDescription>Enter the details for your post below.</DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <label className="text-right">Title</label>
+            <Input className="col-span-3" placeholder="Post title" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <label className="text-right">Category</label>
+            <select className="col-span-3 border rounded p-2">
+              <option value="">Select category</option>
+              <option value="feature">Feature Request</option>
+              <option value="bug">Bug Report</option>
+              <option value="feedback">Feedback</option>
+            </select>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <label className="text-right">Content</label>
+            <textarea className="col-span-3 border rounded p-2" placeholder="Write your post here..." />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Create Post</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export default function FeatureRequestsPage() {
+  return (
+    <div className="container mx-auto p-6">
+      {/* Top Section */}
+      <Card className="bg-white">
+        <CardHeader>
+          <CardTitle>Share your product feedback!</CardTitle>
+          <CardDescription>
+            We want to make Featurebase the best product for you.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+          <Input placeholder="Search for feedback..." className="sm:w-auto flex-1" />
+          <NewPostDialog />
+        </CardContent>
+      </Card>
+
+      <div className="flex flex-col md:flex-row mt-6 gap-6">
+        {/* Main Column */}
+        <div className="w-full md:w-3/4">
+          <Tabs defaultValue="Features">
+            <TabsList>
+              <TabsTrigger value="Features">Features</TabsTrigger>
+              <TabsTrigger value="Bugs">Bugs</TabsTrigger>
+              <TabsTrigger value="Ideas">Ides</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="Features" className="mt-4">
+              {sampleFeatures.map((feature) => (
+                <FeatureRequestCard key={feature.id} feature={feature} />
+              ))}
+            </TabsContent>
+
+            {/* Popular Tab */}
+            <TabsContent value="popular" className="mt-4">
+              <Card className="bg-white mb-4">
+                <CardContent>
+                  <h2 className="text-lg font-semibold">Popular Feature Request</h2>
+                  <p className="text-sm text-muted-foreground">
+                    This is an example of a popular feature request...
+                  </p>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Recent Tab */}
+            <TabsContent value="recent" className="mt-4">
+              <Card className="bg-white mb-4">
+                <CardContent>
+                  <h2 className="text-lg font-semibold">Recent Feedback</h2>
+                  <p className="text-sm text-muted-foreground">
+                    This is an example of recent feedback...
+                  </p>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        {/* Sidebar Column */}
+        <div className="w-full md:w-1/4">
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle>Boards</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <p className="text-sm"><a href="#">View all posts</a></p>
+              <p className="text-sm"><a href="#">Bugs</a></p>
+              <p className="text-sm"><a href="#">Feedback</a></p>
+              <p className="text-sm"><a href="#">Integrations</a></p>
+              <p className="text-sm"><a href="#">Design</a></p>
+              <p className="text-sm"><a href="#">Changelog</a></p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  )
+}

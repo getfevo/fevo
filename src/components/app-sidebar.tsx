@@ -121,7 +121,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
         <NavSecondary
           items={[
-            { title: "Support", url: "#", icon: LifeBuoy },
+            { title: "Support", url: "mailto:manuel@getfevo.io?subject=Support%20Request&body=Hello,%20I%20need%20help%20with...", icon: LifeBuoy },
             { title: "Feedback", url: "#", icon: Send },
           ]}
           className="mt-auto"
