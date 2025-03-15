@@ -1,21 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
 
-export async function middleware(request: NextRequest) {
-	console.log("Middleware: ", request);
-	const sessionCookie = getSessionCookie(request, {
-        // Optionally pass config if cookie name, prefix or useSecureCookies option is customized in auth config.
-		useSecureCookies: true,
-    });
-	console.log("Session cookie: ", sessionCookie);
+export function middleware(request: NextRequest) {
+  // Manual cookie parsing as temporary workaround
+  const cookieHeader = request.headers.get("cookie");
+  const cookies = cookieHeader?.split("; ").reduce((acc, cookie) => {
+    const [key, value] = cookie.split("=");
+    acc.set(key, value);
+    return acc;
+  }, new Map());
 
-	if (!sessionCookie) {
-		return NextResponse.redirect(new URL("/", request.url));
-	}
+  const sessionCookie =
+    cookies?.get("better-auth.session_token") ||
+    cookies?.get("__Secure-better-auth.session_token");
 
-	return NextResponse.next();
+  if (!sessionCookie) {
+    const redirectResponse = NextResponse.redirect(
+      new URL("/login", request.url)
+    );
+    redirectResponse.headers.set("x-middleware-cache", "no-cache");
+    return redirectResponse;
+  }
+
+  const response = NextResponse.next();
+  // Enable only to test the one tap login in localhost
+  //response.headers.set("Referrer-Policy", "no-referrer-when-downgrade");
+  return response;
 }
 
 export const config = {
-	matcher: ["/dashboard"], // Specify the routes the middleware applies to
+  matcher: [
+    "/dashboard",
+  ],
 };
