@@ -4,14 +4,13 @@ import { getSessionCookie } from "better-auth/cookies";
 export async function middleware(request: NextRequest) {
 	const session = getSessionCookie(request, {
         // Optionally pass config if cookie name, prefix or useSecureCookies option is customized in auth config.
-		cookieName: "session_token",
-		cookiePrefix: "better-auth",
+
     });
 
 		// Debugging Logs
 		console.log("Middleware triggered on:", request.url);
 		console.log("Session Cookie:", session);
-		console.log("Request Headers:", request.headers);
+		console.log("Request Headers:", request);
 
 	// Check if session exists
 	if (!session) {
