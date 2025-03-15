@@ -4,11 +4,11 @@ import { project } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function GET(
-  req: Request,
-  context: { params: { id: string } }
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await context.params;
+    const { id } = await params;
     if (!id) {
       return NextResponse.json({ error: "UserId is required" }, { status: 400 });
     }
