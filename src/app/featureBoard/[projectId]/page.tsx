@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+import { FeatureRequestCard } from "@/components/featureRequestCard"
 
 const sampleFeatures = [
   {
@@ -30,26 +31,6 @@ const sampleFeatures = [
     votes: 20,
   },
 ];
-
-function FeatureRequestCard({ feature }) {
-  return (
-    <Card key={feature.id} className="bg-white mb-4">
-      <CardContent>
-        <div className="flex items-center">
-          <div className="mr-4 flex flex-col items-center">
-            <Button variant="outline" size="sm">▲</Button>
-            <span className="text-sm mt-1">{feature.votes}</span>
-          </div>
-          <div className="flex-1">
-            <h2 className="text-lg font-semibold">{feature.title}</h2>
-            <p className="text-sm text-muted-foreground">{feature.description}</p>
-          </div>
-          <Badge variant="outline">{feature.category}</Badge>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
 
 function NewPostDialog() {
   return (
