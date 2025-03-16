@@ -1,38 +1,76 @@
 "use client"
-
-import { useState } from "react";
+// import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
-import { FeatureRequestCard } from "@/components/featureRequestCard"
 import { useParams } from "next/navigation";
 
-const sampleFeatures = [
-  {
-    id: "1",
-    title: "AI feedback prioritization helper",
-    description: "It would be great if we could get AI to automatically suggest new features...",
-    category: "Feature Request",
-    votes: 15,
-  },
-  {
-    id: "2",
-    title: "Help Center Statistics",
-    description: "I'd love to see a stats page about how many times people interact with our support center.",
-    category: "Feedback",
-    votes: 8,
-  },
-  {
-    id: "3",
-    title: "User profile customization",
-    description: "Allow users to customize their profiles with avatars and banners.",
-    category: "Feature Request",
-    votes: 20,
-  },
-];
+interface Feature {
+  id: string;
+  votes: number;
+  title: string;
+  description: string;
+  category: string;
+}
+
+function FeatureRequestCard({ feature }: { feature: Feature }) {
+  const [votes, setVotes] = useState(feature.votes);
+  const [hasVoted, setHasVoted] = useState(false);
+
+  useEffect(() => {
+    // Read from localStorage and update voting state
+    const votedRequests = JSON.parse(localStorage.getItem("votedFeatureRequests") || "[]");
+    setHasVoted(votedRequests.includes(feature.id));
+  }, [feature.id]);
+
+  const handleUpvote = async () => {
+    if (hasVoted) return;
+
+    try {
+      const response = await fetch("/api/feature-requests", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ featureRequestId: feature.id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upvote feature request");
+      }
+
+      const data = await response.json();
+      setVotes(data.featureRequest.votes);
+      setHasVoted(true);
+
+        // Store in localStorage
+        const votedRequests = JSON.parse(localStorage.getItem("votedFeatureRequests") || "[]");
+        localStorage.setItem("votedFeatureRequests", JSON.stringify([...votedRequests, feature.id]));
+    } catch (error) {
+      console.error("Error upvoting feature request:", error);
+      alert("An error occurred while upvoting.");
+    }
+  };
+
+  return (
+    <Card className="bg-white mb-4">
+      <CardContent>
+        <h2 className="text-lg font-semibold">{feature.title}</h2>
+        <p className="text-sm text-muted-foreground">{feature.description}</p>
+        <div className="flex items-center justify-between mt-2">
+          <Badge>{feature.category}</Badge>
+          <Button onClick={handleUpvote} disabled={hasVoted}>
+            {hasVoted ? "✅ Voted" : `👍 ${votes}`}
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 function NewPostDialog({ projectId }: { projectId: string }) {
   const [title, setTitle] = useState("");
@@ -135,6 +173,42 @@ function NewPostDialog({ projectId }: { projectId: string }) {
 
 export default function FeatureRequestsPage() {
   const { projectId } = useParams<{ projectId: string }>();
+  const [featureRequests, setFeatureRequests] = useState<{ id: string; votes: number; title: string; description: string; category: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchFeatureRequests = async () => {
+      try {
+        const response = await fetch(`/api/feature-requests?projectId=${projectId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch feature requests");
+        }
+        const data = await response.json();
+        setFeatureRequests(data.featureRequests);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (projectId) {
+      fetchFeatureRequests();
+    }
+  }, [projectId]);
+
+  if (loading) {
+    return <div className="text-center mt-4">Loading feature requests...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center mt-4 text-red-500">Error: {error}</div>;
+  }
 
   return (
     <div className="container mx-auto p-6">
@@ -152,62 +226,24 @@ export default function FeatureRequestsPage() {
       </Card>
 
       <div className="flex flex-col md:flex-row mt-6 gap-6">
-        {/* Main Column */}
         <div className="w-full md:w-3/4">
           <Tabs defaultValue="Features">
             <TabsList>
               <TabsTrigger value="Features">Features</TabsTrigger>
               <TabsTrigger value="Bugs">Bugs</TabsTrigger>
-              <TabsTrigger value="Ideas">Ides</TabsTrigger>
+              <TabsTrigger value="Ideas">Ideas</TabsTrigger>
             </TabsList>
 
             <TabsContent value="Features" className="mt-4">
-              {sampleFeatures.map((feature) => (
-                <FeatureRequestCard key={feature.id} feature={feature} />
-              ))}
-            </TabsContent>
-
-            {/* Popular Tab */}
-            <TabsContent value="popular" className="mt-4">
-              <Card className="bg-white mb-4">
-                <CardContent>
-                  <h2 className="text-lg font-semibold">Popular Feature Request</h2>
-                  <p className="text-sm text-muted-foreground">
-                    This is an example of a popular feature request...
-                  </p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Recent Tab */}
-            <TabsContent value="recent" className="mt-4">
-              <Card className="bg-white mb-4">
-                <CardContent>
-                  <h2 className="text-lg font-semibold">Recent Feedback</h2>
-                  <p className="text-sm text-muted-foreground">
-                    This is an example of recent feedback...
-                  </p>
-                </CardContent>
-              </Card>
+              {featureRequests.length > 0 ? (
+                featureRequests.map((feature) => (
+                  <FeatureRequestCard key={feature.id} feature={feature} />
+                ))
+              ) : (
+                <p className="text-center text-muted-foreground">No feature requests found.</p>
+              )}
             </TabsContent>
           </Tabs>
-        </div>
-
-        {/* Sidebar Column */}
-        <div className="w-full md:w-1/4">
-          <Card className="bg-white">
-            <CardHeader>
-              <CardTitle>Boards</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <p className="text-sm"><a href="#">View all posts</a></p>
-              <p className="text-sm"><a href="#">Bugs</a></p>
-              <p className="text-sm"><a href="#">Feedback</a></p>
-              <p className="text-sm"><a href="#">Integrations</a></p>
-              <p className="text-sm"><a href="#">Design</a></p>
-              <p className="text-sm"><a href="#">Changelog</a></p>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
