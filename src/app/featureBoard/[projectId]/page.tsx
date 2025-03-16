@@ -1,5 +1,4 @@
 "use client"
-// import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -22,7 +21,6 @@ function FeatureRequestCard({ feature }: { feature: Feature }) {
   const [hasVoted, setHasVoted] = useState(false);
 
   useEffect(() => {
-    // Read from localStorage and update voting state
     const votedRequests = JSON.parse(localStorage.getItem("votedFeatureRequests") || "[]");
     setHasVoted(votedRequests.includes(feature.id));
   }, [feature.id]);
@@ -47,9 +45,8 @@ function FeatureRequestCard({ feature }: { feature: Feature }) {
       setVotes(data.featureRequest.votes);
       setHasVoted(true);
 
-        // Store in localStorage
-        const votedRequests = JSON.parse(localStorage.getItem("votedFeatureRequests") || "[]");
-        localStorage.setItem("votedFeatureRequests", JSON.stringify([...votedRequests, feature.id]));
+      const votedRequests = JSON.parse(localStorage.getItem("votedFeatureRequests") || "[]");
+      localStorage.setItem("votedFeatureRequests", JSON.stringify([...votedRequests, feature.id]));
     } catch (error) {
       console.error("Error upvoting feature request:", error);
       alert("An error occurred while upvoting.");
@@ -57,15 +54,26 @@ function FeatureRequestCard({ feature }: { feature: Feature }) {
   };
 
   return (
-    <Card className="bg-white mb-4">
+    <Card key={feature.id} className="bg-white mb-4">
       <CardContent>
-        <h2 className="text-lg font-semibold">{feature.title}</h2>
-        <p className="text-sm text-muted-foreground">{feature.description}</p>
-        <div className="flex items-center justify-between mt-2">
-          <Badge>{feature.category}</Badge>
-          <Button onClick={handleUpvote} disabled={hasVoted}>
-            {hasVoted ? "✅ Voted" : `👍 ${votes}`}
+        <div className="flex items-center">
+          <div className="mr-4 flex flex-col items-center">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleUpvote} 
+            disabled={hasVoted}
+            className={hasVoted ? "bg-green-500 text-white border-green-500" : ""}
+          >
+            ▲
           </Button>
+            <span className="text-sm mt-1">{votes}</span>
+          </div>
+          <div className="flex-1">
+            <h2 className="text-lg font-semibold">{feature.title}</h2>
+            <p className="text-sm text-muted-foreground">{feature.description}</p>
+          </div>
+          <Badge variant="outline">{feature.category}</Badge>
         </div>
       </CardContent>
     </Card>
@@ -173,9 +181,29 @@ function NewPostDialog({ projectId }: { projectId: string }) {
 
 export default function FeatureRequestsPage() {
   const { projectId } = useParams<{ projectId: string }>();
+  const [projectName, setProjectName] = useState<string | null>(null);
   const [featureRequests, setFeatureRequests] = useState<{ id: string; votes: number; title: string; description: string; category: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+   const fetchProjectName = async () => {
+      try {
+        const response = await fetch(`/api/projects?id=${projectId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch project name");
+        }
+        const data = await response.json();
+        setProjectName(data.project.name);
+      } catch (err) {
+        console.error("Error fetching project name:", err);
+      }
+    };
+
+    if (projectId) {
+      fetchProjectName();
+    }
+  }, [projectId]);
 
   useEffect(() => {
     const fetchFeatureRequests = async () => {
@@ -212,6 +240,11 @@ export default function FeatureRequestsPage() {
 
   return (
     <div className="container mx-auto p-6">
+      <div className="container mx-auto p-6">
+      <div className="mb-6 text-left">
+        <h1 className="text-3xl font-bold">{projectName ? `${projectName}` : "Project"}</h1>
+        <p className="text-muted-foreground">This is the feature request board for this project. Share your ideas and feedback to help us improve!</p>
+      </div>
       <Card className="bg-white">
         <CardHeader>
           <CardTitle>Share your product feedback!</CardTitle>
@@ -246,6 +279,7 @@ export default function FeatureRequestsPage() {
           </Tabs>
         </div>
       </div>
+    </div>
     </div>
   )
 }
