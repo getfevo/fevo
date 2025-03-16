@@ -182,6 +182,7 @@ function NewPostDialog({ projectId }: { projectId: string }) {
 export default function FeatureRequestsPage() {
   const { projectId } = useParams<{ projectId: string }>();
   const [projectName, setProjectName] = useState<string | null>(null);
+  const [projectDescription, setProjectDescription] = useState<string | null>(null);
   const [featureRequests, setFeatureRequests] = useState<{ id: string; votes: number; title: string; description: string; category: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -195,6 +196,7 @@ export default function FeatureRequestsPage() {
         }
         const data = await response.json();
         setProjectName(data.project.name);
+        setProjectDescription(data.project.description);
       } catch (err) {
         console.error("Error fetching project name:", err);
       }
@@ -243,7 +245,7 @@ export default function FeatureRequestsPage() {
       <div className="container mx-auto p-6">
       <div className="mb-6 text-left">
         <h1 className="text-3xl font-bold">{projectName ? `${projectName}` : "Project"}</h1>
-        <p className="text-muted-foreground">This is the feature request board for this project. Share your ideas and feedback to help us improve!</p>
+        <p className="text-muted-foreground">{projectDescription ? `${projectDescription}` : "This is the standard description"}</p>
       </div>
       <Card className="bg-white">
         <CardHeader>
