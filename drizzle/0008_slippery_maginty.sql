@@ -1,0 +1,1 @@
+ALTER TABLE "feature_request" ADD COLUMN "votes" integer;

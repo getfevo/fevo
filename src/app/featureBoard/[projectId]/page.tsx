@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -7,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { FeatureRequestCard } from "@/components/featureRequestCard"
+import { useParams } from "next/navigation";
 
 const sampleFeatures = [
   {
@@ -32,7 +34,50 @@ const sampleFeatures = [
   },
 ];
 
-function NewPostDialog() {
+function NewPostDialog({ projectId }: { projectId: string }) {
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!title || !category || !content) {
+      alert("All fields are required");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/feature-requests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          projectId,
+          title,
+          description: content,
+          category,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit request");
+      }
+
+      alert("Feature request submitted successfully!");
+      setTitle("");
+      setCategory("");
+      setContent("");
+    } catch (error) {
+      console.error("Error submitting feature request:", error);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -48,11 +93,20 @@ function NewPostDialog() {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <label className="text-right">Title</label>
-            <Input className="col-span-3" placeholder="Post title" />
+            <Input
+              className="col-span-3"
+              placeholder="Post title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <label className="text-right">Category</label>
-            <select className="col-span-3 border rounded p-2">
+            <select
+              className="col-span-3 border rounded p-2"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
               <option value="">Select category</option>
               <option value="feature">Feature Request</option>
               <option value="bug">Bug Report</option>
@@ -61,11 +115,18 @@ function NewPostDialog() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <label className="text-right">Content</label>
-            <textarea className="col-span-3 border rounded p-2" placeholder="Write your post here..." />
+            <textarea
+              className="col-span-3 border rounded p-2"
+              placeholder="Write your post here..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Create Post</Button>
+          <Button onClick={handleSubmit} disabled={loading}>
+            {loading ? "Submitting..." : "Create Post"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -73,9 +134,10 @@ function NewPostDialog() {
 }
 
 export default function FeatureRequestsPage() {
+  const { projectId } = useParams<{ projectId: string }>();
+
   return (
     <div className="container mx-auto p-6">
-      {/* Top Section */}
       <Card className="bg-white">
         <CardHeader>
           <CardTitle>Share your product feedback!</CardTitle>
@@ -85,7 +147,7 @@ export default function FeatureRequestsPage() {
         </CardHeader>
         <CardContent className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
           <Input placeholder="Search for feedback..." className="sm:w-auto flex-1" />
-          <NewPostDialog />
+          <NewPostDialog projectId={projectId} />
         </CardContent>
       </Card>
 

@@ -69,6 +69,8 @@ export const feature_request = pgTable("feature_request", {
 					description: text("description"),
 					status: text("status"),
 					priority: integer("priority"),
+					votes: integer("votes").default(0),
+					category: text("category"),
 					createdBy: text("created_by").references(() => user.id, { onDelete: 'cascade' }),
 					createdAt: timestamp("created_at").notNull(),
 					updatedAt: timestamp("updated_at").notNull(),
