@@ -14,6 +14,7 @@ interface Feature {
   title: string;
   description: string;
   category: string;
+  status: string;
 }
 
 function FeatureRequestCard({ feature }: { feature: Feature }) {
@@ -73,7 +74,7 @@ function FeatureRequestCard({ feature }: { feature: Feature }) {
             <h2 className="text-lg font-semibold">{feature.title}</h2>
             <p className="text-sm text-muted-foreground">{feature.description}</p>
           </div>
-          <Badge variant="outline">{feature.category}</Badge>
+          <Badge variant="outline">{feature.status ? feature.status : "Unplanned"}</Badge>
         </div>
       </CardContent>
     </Card>
@@ -183,7 +184,7 @@ export default function FeatureRequestsPage() {
   const { projectId } = useParams<{ projectId: string }>();
   const [projectName, setProjectName] = useState<string | null>(null);
   const [projectDescription, setProjectDescription] = useState<string | null>(null);
-  const [featureRequests, setFeatureRequests] = useState<{ id: string; votes: number; title: string; description: string; category: string }[]>([]);
+  const [featureRequests, setFeatureRequests] = useState<Feature[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -243,31 +244,33 @@ export default function FeatureRequestsPage() {
   return (
     <div className="container mx-auto p-6">
       <div className="container mx-auto p-6">
-      <div className="mb-6 text-left">
-        <h1 className="text-3xl font-bold">{projectName ? `${projectName}` : "Project"}</h1>
-        <p className="text-muted-foreground">{projectDescription ? `${projectDescription}` : "This is the standard description"}</p>
+      <div className="mb-6 text-left flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold">{projectName ? `${projectName}` : "Project"}</h1>
+          <p className="text-muted-foreground">{projectDescription ? `${projectDescription}` : "This is the standard description"}</p>
+        </div>
+        <NewPostDialog projectId={projectId} />
       </div>
-      <Card className="bg-white">
-        <CardHeader>
-          <CardTitle>Share your product feedback!</CardTitle>
-          <CardDescription>
-            We want to make Featurebase the best product for you.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-          <Input placeholder="Search for feedback..." className="sm:w-auto flex-1" />
-          <NewPostDialog projectId={projectId} />
-        </CardContent>
-      </Card>
 
       <div className="flex flex-col md:flex-row mt-6 gap-6">
         <div className="w-full md:w-3/4">
-          <Tabs defaultValue="Features">
+          <Tabs defaultValue="All">
             <TabsList>
+              <TabsTrigger value="All">All</TabsTrigger>
               <TabsTrigger value="Features">Features</TabsTrigger>
               <TabsTrigger value="Bugs">Bugs</TabsTrigger>
               <TabsTrigger value="Ideas">Ideas</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="All" className="mt-4">
+              {featureRequests.length > 0 ? (
+                featureRequests.map((feature) => (
+                  <FeatureRequestCard key={feature.id} feature={feature} />
+                ))
+              ) : (
+                <p className="text-center text-muted-foreground">No requests found.</p>
+              )}
+            </TabsContent>
 
             <TabsContent value="Features" className="mt-4">
               {featureRequests.length > 0 ? (
