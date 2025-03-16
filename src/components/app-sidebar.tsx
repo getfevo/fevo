@@ -59,7 +59,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           if (data.projects) {
             setProjects(data.projects);
             if (data.projects.length > 0) {
-              setSelectedProject(data.projects[0].name);
+              setSelectedProject(data.projects[0].id);
             }
           }
         })
@@ -88,13 +88,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="flex-1 text-left text-sm leading-tight">
                   <SelectValue placeholder="Select a project">
-                    {selectedProject}
+                    {projects.find(p => p.id === selectedProject)?.name || selectedProject}
                   </SelectValue>
                 </div>
               </SelectTrigger>
               <SelectContent className="bg-white text-black border border-gray-200 shadow-lg">
                 {projects.map((project) => (
-                  <SelectItem key={project.id} value={project.name} className="hover:bg-gray-100 text-black">
+                  <SelectItem key={project.id} value={project.id} className="hover:bg-gray-100 text-black">
                     {project.name}
                   </SelectItem>
                 ))}
@@ -123,20 +123,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           items={[
             {
               title: "Dashboard",
-              url: "#",
+              url: "/dashboard",
               icon: SquareTerminal,
-              isActive: true,
-              
+              isActive: false,
             },
             {
-              title: "Idea Bord",
-              url: "#",
+              title: "Idea Board",
+              url: `/ideaboard/${selectedProject}`,
               icon: Lightbulb,
+              isActive: false,
             },
             {
               title: "Kanban",
               url: "#",
               icon: ListTodo,
+              isActive: false,
             },
             {
               title: "Settings",
