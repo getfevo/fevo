@@ -132,7 +132,7 @@ export function RegisterForm({
                     try {
                       await authClient.signIn.social({
                         provider: "google",
-                        callbackURL: callbackUrl,
+                        callbackURL: "/dashboard",
                       });
                       toast.success("Signed up with Google. Redirecting...");
                     } catch (error: any) {
