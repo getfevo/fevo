@@ -135,7 +135,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             },
             {
               title: "Kanban",
-              url: "#",
+              url: `/kanban/${selectedProject}`,
               icon: ListTodo,
               isActive: false,
             },

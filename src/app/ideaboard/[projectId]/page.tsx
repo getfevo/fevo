@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Search } from "lucide-react"
 
 interface FeatureRequest {
   id: string
@@ -226,11 +227,11 @@ export default function IdeaBoardPage() {
   }, [projectId]);
 
   const mainContent = (
-    <div className="container mx-auto p-6">
-      <div className="container mx-auto p-6">
+    <div className="flex-1 space-y-6 p-6">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-6 text-left flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold">{projectName}</h1>
+            <h1 className="text-2xl font-bold tracking-tight">{projectName}</h1>
             <p className="text-muted-foreground">{projectDescription}</p>
           </div>
           <NewPostDialog />
@@ -263,41 +264,41 @@ export default function IdeaBoardPage() {
         </Tabs>
       </div>
     </div>
-  )
-
-  const pageContent = (
-    <div className="flex w-screen bg-gray-100">
-      <AppSidebar />
-      <div className="flex-1">
-        {mainContent}
-      </div>
-    </div>
-  )
+  );
 
   if (loading) {
-    return (
-      <SidebarProvider>
-        <div className="flex h-screen bg-gray-100">
-          <AppSidebar />
-          <div className="flex-1">
-            <div className="container mx-auto p-6">
-              <div className="container mx-auto p-6">
-                <div className="animate-pulse space-y-4">
-                  <div className="h-8 bg-gray-200 rounded w-1/4"></div>
-                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                  <div className="space-y-3">
-                    <div className="h-20 bg-gray-200 rounded"></div>
-                    <div className="h-20 bg-gray-200 rounded"></div>
-                    <div className="h-20 bg-gray-200 rounded"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </SidebarProvider>
-    )
+    return <div>Loading...</div>;
   }
 
-  return <SidebarProvider>{pageContent}</SidebarProvider>
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <div className="flex min-h-screen w-full bg-muted/10">
+          <div className="flex-1">
+            <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-6">
+              <SidebarTrigger />
+              <div className="w-full flex-1 md:w-auto md:flex-none">
+                <form>
+                  <div className="relative">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      type="search"
+                      placeholder="Search ideas..."
+                      className="w-full rounded-lg bg-background pl-8 md:w-[300px] lg:w-[400px]"
+                    />
+                  </div>
+                </form>
+              </div>
+            </header>
+            {mainContent}
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  );
 }
