@@ -47,6 +47,11 @@ export default function KanbanPage() {
         title: "New",
         tasks: [],
       },
+      "not-started": {
+        id: "not-started",
+        title: "Not Started",
+        tasks: [],
+      },
       "in-progress": {
         id: "in-progress",
         title: "In Progress",
@@ -58,7 +63,7 @@ export default function KanbanPage() {
         tasks: [],
       },
     },
-    columnOrder: ["new", "in-progress", "completed"],
+    columnOrder: ["new", "not-started", "in-progress", "completed"],
   });
 
   useEffect(() => {
@@ -87,27 +92,32 @@ export default function KanbanPage() {
           throw new Error("Failed to fetch feature requests");
         }
         const data = await response.json();
-        
-        // Organize feature requests into columns based on their status
+    
+        // Ensure all columns exist in the board
         const newBoard = {
           ...board,
           columns: {
             new: {
               ...board.columns.new,
-              tasks: data.featureRequests.filter((fr: FeatureRequest) => 
-                fr.status === 'new' || fr.status === null || fr.status === undefined
-              ),
+              tasks: data.featureRequests?.filter((fr: FeatureRequest) =>
+                fr.status === "new" || fr.status === null || fr.status === undefined
+              ) || [],
+            },
+            "not-started": {
+              ...board.columns["not-started"],
+              tasks: data.featureRequests?.filter((fr: FeatureRequest) => fr.status === "not-started") || [],
             },
             "in-progress": {
               ...board.columns["in-progress"],
-              tasks: data.featureRequests.filter((fr: FeatureRequest) => fr.status === 'in-progress'),
+              tasks: data.featureRequests?.filter((fr: FeatureRequest) => fr.status === "in-progress") || [],
             },
             completed: {
               ...board.columns.completed,
-              tasks: data.featureRequests.filter((fr: FeatureRequest) => fr.status === 'completed'),
+              tasks: data.featureRequests?.filter((fr: FeatureRequest) => fr.status === "completed") || [],
             },
           },
         };
+    
         setBoard(newBoard);
       } catch (err) {
         if (err instanceof Error) {
@@ -243,7 +253,7 @@ export default function KanbanPage() {
               </div>
             </header>
             <main className="flex-1 space-y-6 p-6">
-              <div className="max-w-7xl mx-auto">
+              <div className="max-w-8xl mx-auto">
                 <div className="flex justify-between items-center mb-6">
                   <div>
                     <h1 className="text-2xl font-bold tracking-tight">{projectName}</h1>
@@ -252,16 +262,21 @@ export default function KanbanPage() {
                 </div>
                 
                 <DragDropContext onDragEnd={onDragEnd}>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {board.columnOrder.map((columnId) => {
-                      const column = board.columns[columnId];
-                      
-                      return (
-                        <div key={columnId}>
-                          <Card>
-                            <CardHeader>
-                              <CardTitle>{column.title}</CardTitle>
-                            </CardHeader>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                  {board.columnOrder.map((columnId) => {
+  const column = board.columns[columnId];
+
+  if (!column) {
+    console.error(`Column with ID "${columnId}" is missing`);
+    return null;
+  }
+
+  return (
+    <div key={columnId}>
+      <Card>
+        <CardHeader>
+          <CardTitle>{column.title}</CardTitle>
+        </CardHeader>
                             <CardContent>
                               <Droppable droppableId={columnId}>
                                 {(provided: DroppableProvided) => (
@@ -281,22 +296,22 @@ export default function KanbanPage() {
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
-                                            className="mb-3"
+                                            className="mb-2 text-sm"
                                           >
                                             <Card>
-                                              <CardContent className="p-4">
+                                              <CardContent className="p-3">
                                                 <div className="flex justify-between items-start mb-2">
                                                   <h3 className="font-semibold">{task.title}</h3>
                                                   <Badge variant={task.category === 'feature' ? 'default' : 'destructive'}>
                                                     {task.category}
                                                   </Badge>
                                                 </div>
-                                                <p className="text-sm text-gray-600 mb-3">{task.description}</p>
+                                                <p className="text-sm text-gray-500 mb-2">{task.description}</p>
                                                 <div className="flex justify-between items-center">
                                                   <span className="text-xs text-gray-500">
                                                     {new Date(task.createdAt).toLocaleDateString()}
                                                   </span>
-                                                  <span className="text-sm text-gray-600">{task.votes} votes</span>
+                                                  <span className="text-xs text-gray-600">{task.votes} votes</span>
                                                 </div>
                                               </CardContent>
                                             </Card>
