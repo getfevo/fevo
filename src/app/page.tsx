@@ -1,6 +1,5 @@
 import WaitlistForm from "@/components/waitlist-form"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Calendar, CheckCircle } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import Header from "@/components/header"
@@ -11,11 +10,11 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-gray-100 ">
       <Header />
-      <main className="flex-1 self-center">
+      <main className="flex-1 self-center px-4 sm:px-6 md:px-8">
         {/* Hero Section */}
-        <section className="w-350 py-12 md:py-24 lg:py-32 xl:py-40 bg-white mt-10 rounded-2xl shadow-sm">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 bg-white mt-10 rounded-2xl shadow-sm">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
+            <div className="grid gap-8 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="inline-flex items-center rounded-full border border-gray-300 text-gray-700 px-3 py-1 text-sm font-medium">
                   <ArrowRight className="mr-1 h-4 w-4 text-gray-500" />
@@ -34,7 +33,7 @@ export default function Home() {
                   <WaitlistForm />
                 </div>
               </div>
-              <div className="flex items-center justify-center ">
+              <div className="flex items-center justify-center">
                 <div className="relative w-full h-[400px] overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
                   <div className="absolute top-0 left-0 right-0 bg-gray-50 p-4 border-b border-gray-200">
                     <div className="flex items-center">
@@ -47,24 +46,9 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-center">
-  <div className="relative w-full h-[400px] overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-    <div className="absolute top-0 left-0 right-0 bg-gray-50 p-4 border-b border-gray-200">
-      <div className="flex items-center">
-        <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
-          F
-        </div>
-        <div className="ml-3">
-          <p className="font-medium">Feedback Portal</p>
-          <p className="text-sm text-gray-500">Product Roadmap</p>
-        </div>
-      </div>
-    </div>
 
-    {/* ✅ Use the new FeatureRequestList component */}
-    <FeatureRequestListLanding />
-  </div>
-</div>
+                  {/* ✅ Use the new FeatureRequestList component */}
+                  <FeatureRequestListLanding />
                 </div>
               </div>
             </div>
@@ -84,7 +68,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12 ">
+            <div className="mx-auto grid max-w-5xl items-center gap-8 py-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 text-black">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -155,7 +139,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-3 lg:gap-12">
+            <div className="mx-auto grid max-w-5xl gap-8 py-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white">1</div>
                 <div className="space-y-2">
@@ -186,9 +170,9 @@ export default function Home() {
             </div>
           </div>
         </section>
-        
-         {/*FAQ Section */}
-        <section id="faq" className="w-full py-16 md:py-28 lg:py-36 bg-gray-100 mt-12 rounded-2xl">
+
+        {/*FAQ Section */}
+        <section id="faq" className="w-full py-12 md:py-20 lg:py-28 bg-gray-100 mt-10 rounded-2xl">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-6 text-center">
               <div className="space-y-4">
@@ -207,19 +191,23 @@ export default function Home() {
                 {[
                   {
                     question: "How will I know when I get access?",
-                    answer: "We'll send you an email with instructions on how to access the platform once your spot on the waitlist is activated.",
+                    answer:
+                      "We'll send you an email with instructions on how to access the platform once your spot on the waitlist is activated.",
                   },
                   {
                     question: "Is there a cost to join the waitlist?",
-                    answer: "No, joining the waitlist is completely free. We'll share more information about our pricing model closer to launch.",
+                    answer:
+                      "No, joining the waitlist is completely free. We'll share more information about our pricing model closer to launch.",
                   },
                   {
                     question: "Will there be any benefits for early adopters?",
-                    answer: "Early adopters will receive exclusive features, priority support, and special perks as a thank you for joining us from the beginning.",
+                    answer:
+                      "Early adopters will receive exclusive features, priority support, and special perks as a thank you for joining us from the beginning.",
                   },
                   {
                     question: "Can I request specific features?",
-                    answer: "Yes, we welcome feature requests from our waitlist members. Your feedback will help shape the future of our platform.",
+                    answer:
+                      "Yes, we welcome feature requests from our waitlist members. Your feedback will help shape the future of our platform.",
                   },
                 ].map((item, i) => (
                   <AccordionItem key={i} value={`item-${i}`}>
@@ -247,22 +235,14 @@ export default function Home() {
               <div className="w-full max-w-sm">
                 <WaitlistForm isDark={true} />
               </div>
-              
             </div>
           </div>
         </section>
       </main>
       <footer className="w-full border-t border-gray-200 bg-white py-6 md:py-12">
-        <div className="container flex flex-col items-center justify-between gap-4 px-4 md:flex-row md:px-6">
+        <div className="container flex flex-col items-center justify-between gap-6 px-4 text-center md:text-left md:flex-row md:px-6">
           <div className="flex items-center gap-2">
-          <Image
-                  src="/logo.png"
-                  alt="Fevo"
-                  width={300}
-                  height={100}
-                  className="h-20 w-auto"
-                  priority
-                />
+            <Image src="/logo.png" alt="Fevo" width={300} height={100} className="h-20 w-auto" priority />
           </div>
           <nav className="flex gap-4 sm:gap-6">
             <Link href="#" className="text-xs text-gray-500 hover:text-black">
