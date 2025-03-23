@@ -34,6 +34,7 @@ export function RegisterForm({
         email: values.email,
         password: values.password,
         name: values.name,
+        callbackURL: "/login",
       });
       toast.success("Please check your email for verification.");
       router.push(callbackUrl);
