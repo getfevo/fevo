@@ -245,8 +245,11 @@ export default function IdeaBoardPage() {
           </TabsList>
           <TabsContent value="all">
             <div className="flex flex-col">
-              {Array.isArray(items) && items.length > 0 ? (
-                items.map(item => <FeatureRequestCard key={item.id} item={item} onVote={(id) => console.log(`Voted for ${id}`)} />)
+              {items.length > 0 ? (
+                items
+                  .slice()
+                  .sort((a, b) => b.votes - a.votes)
+                  .map(item => <FeatureRequestCard key={item.id} item={item} onVote={(id) => console.log(`Voted for ${id}`)} />)
               ) : (
                 <p className="text-center text-gray-500">No feature requests found.</p>
               )}
@@ -254,10 +257,25 @@ export default function IdeaBoardPage() {
           </TabsContent>
           <TabsContent value="features">
             <div className="flex flex-col">
-              {Array.isArray(items) && items.length > 0 ? (
-                items.map(item => <FeatureRequestCard key={item.id} item={item} onVote={(id) => console.log(`Voted for ${id}`)} />)
+              {items.filter(item => item.category === 'feature').length > 0 ? (
+                items
+                  .filter(item => item.category === 'feature')
+                  .sort((a, b) => b.votes - a.votes)
+                  .map(item => <FeatureRequestCard key={item.id} item={item} onVote={(id) => console.log(`Voted for ${id}`)} />)
               ) : (
                 <p className="text-center text-gray-500">No feature requests found.</p>
+              )}
+            </div>
+          </TabsContent>
+          <TabsContent value="bugs">
+            <div className="flex flex-col">
+              {items.filter(item => item.category === 'bug').length > 0 ? (
+                items
+                  .filter(item => item.category === 'bug')
+                  .sort((a, b) => b.votes - a.votes)
+                  .map(item => <FeatureRequestCard key={item.id} item={item} onVote={(id) => console.log(`Voted for ${id}`)} />)
+              ) : (
+                <p className="text-center text-gray-500">No bug reports found.</p>
               )}
             </div>
           </TabsContent>
