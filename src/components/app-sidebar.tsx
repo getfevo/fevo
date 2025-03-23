@@ -138,13 +138,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             },
             {
               title: "Settings",
-              url: "#",
+              url: "/settings",
               icon: Settings2,
               items: [
-                { title: "General", url: "#" },
-                { title: "Team", url: "#" },
-                { title: "Billing", url: "#" },
-                { title: "Limits", url: "#" },
+                { title: "General", url: "/settings/general" },
+                { title: "Team", url: "/settings/team" },
+                { title: "Billing", url: "/settings/billing" },
+                { title: "Limits", url: "/settings/limits" },
               ],
             },
           ]}
