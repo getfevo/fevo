@@ -120,7 +120,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           items={[
             {
               title: "Dashboard",
-              url: "/dashboard",
+              url: selectedOrganization ? `/dashboard/${selectedOrganization}` : "/dashboard",
               icon: SquareTerminal,
               isActive: false,
             },
