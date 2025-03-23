@@ -37,50 +37,47 @@ import { authClient } from "@/lib/authClient"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 import { url } from "inspector";
+import { organization } from "@/db/schema";
+
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const router = useRouter();
   const { data: session ,error} = authClient.useSession();
   const [projects, setProjects] = React.useState<{ id: string; name: string }[]>([]);
-  const [selectedProject, setSelectedProject] = React.useState("");
+  const [selectedOrganization, setSelectedOrganization] = React.useState("");
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  // Add effect to log when session changes
-  useEffect(() => {
-    console.log("Session updated:", session?.user?.name);
-  }, [session]);
+  const { data: organizations } = authClient.useListOrganizations()
 
   useEffect(() => {
-    if (session?.user) {
-      console.log("Fetching projects for user:", session.user.id);
-      fetch(`/api/projects/${session.user.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.projects) {
-            setProjects(data.projects);
-            if (data.projects.length > 0) {
-              setSelectedProject(data.projects[0].id);
-            }
-          }
-        })
-        .catch((error) => console.error("Error fetching projects:", error));
+    const storedSlug = localStorage.getItem("activeOrganizationSlug");
+    if (storedSlug && organizations) {
+      const matchedOrg = organizations.find(org => org.slug === storedSlug);
+      if (matchedOrg) {
+        setSelectedOrganization(matchedOrg.slug);
+      }
     }
-  }, [session?.user?.id]);
-
+  }, [organizations]);
+  
+   
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
           <Select
-              onValueChange={(value) => {
+              onValueChange={async (value) => {
                 if (value === 'new_project') {
                   router.push("/dashboard/new-project");
                 } else {
-                  setSelectedProject(value);
+                  setSelectedOrganization(value);
+                  const selectedOrg = organizations?.find(org => org.slug === value);
+                  if (selectedOrg?.slug) {
+                    localStorage.setItem("activeOrganizationSlug", selectedOrg.slug);
+                  }
                 }
               }}
-              value={selectedProject}
+              value={selectedOrganization}
             >
               <SelectTrigger className="w-full flex items-center gap-2 p-2 rounded-lg bg-white text-black border border-gray-300 shadow-sm">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg">
@@ -88,14 +85,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="flex-1 text-left text-sm leading-tight">
                   <SelectValue placeholder="Select a project">
-                    {projects.find(p => p.id === selectedProject)?.name || selectedProject}
+                    {organizations?.find(p => p.slug === selectedOrganization)?.name || selectedOrganization}
                   </SelectValue>
                 </div>
               </SelectTrigger>
               <SelectContent className="bg-white text-black border border-gray-200 shadow-lg">
-                {projects.map((project) => (
-                  <SelectItem key={project.id} value={project.id} className="hover:bg-gray-100 text-black">
-                    {project.name}
+                {organizations?.map((organization) => (
+                  <SelectItem key={organization.id} value={organization.slug} className="hover:bg-gray-100 text-black">
+                    {organization.name}
                   </SelectItem>
                 ))}
                 
@@ -129,13 +126,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             },
             {
               title: "Idea Board",
-              url: `/ideaboard/${selectedProject}`,
+              url: `/ideaboard/${selectedOrganization}`,
               icon: Lightbulb,
               isActive: false,
             },
             {
               title: "Kanban",
-              url: `/kanban/${selectedProject}`,
+              url: `/kanban/${selectedOrganization}`,
               icon: ListTodo,
               isActive: false,
             },

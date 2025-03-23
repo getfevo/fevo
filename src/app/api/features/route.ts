@@ -5,16 +5,16 @@ import { eq } from "drizzle-orm";
 
 export async function POST(req: Request) {
   try {
-    const { projectId, title, description } = await req.json();
+    const { organization_id, title, description } = await req.json();
 
     // Validate required fields
-    if (!projectId || typeof projectId !== "string" || !title || typeof title !== "string") {
+    if (!organization_id || typeof organization_id !== "string" || !title || typeof title !== "string") {
       return NextResponse.json({ error: "Invalid request body. 'projectId' and 'title' are required." }, { status: 400 });
     }
 
     // Insert new feature record
     const result = await db.insert(feature_request).values({
-      projectId,
+      organizationId: organization_id,
       title,
       description,
       createdAt: new Date(),
@@ -31,10 +31,10 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const projectId = searchParams.get("projectId");
+    const organizationId = searchParams.get("organizationId");
 
     // Validate projectId
-    if (!projectId || typeof projectId !== "string") {
+    if (!organizationId || typeof organizationId !== "string") {
       return NextResponse.json({ error: "Invalid or missing 'projectId' parameter." }, { status: 400 });
     }
 
@@ -42,7 +42,7 @@ export async function GET(req: Request) {
     const features = await db
       .select()
       .from(feature_request)
-      .where(eq(feature_request.projectId, projectId));
+      .where(eq(feature_request.organizationId, organizationId));
 
     return NextResponse.json({ features }, { status: 200 });
   } catch (error) {

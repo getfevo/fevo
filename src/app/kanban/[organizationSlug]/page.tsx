@@ -35,7 +35,7 @@ interface Board {
 }
 
 export default function KanbanPage() {
-  const { projectId } = useParams<{ projectId: string }>();
+  const { organizationSlug } = useParams<{ organizationSlug: string }>();
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [loading, setLoading] = useState(true);
@@ -69,7 +69,7 @@ export default function KanbanPage() {
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
-        const response = await fetch(`/api/projects/${projectId}`);
+        const response = await fetch(`/api/organization?slug=${organizationSlug}`);
         if (!response.ok) {
           throw new Error("Failed to fetch project details");
         }
@@ -87,7 +87,7 @@ export default function KanbanPage() {
 
     const fetchFeatureRequests = async () => {
       try {
-        const response = await fetch(`/api/feature-requests?projectId=${projectId}`);
+        const response = await fetch(`/api/feature-requests?organizationSlug=${organizationSlug}`);
         if (!response.ok) {
           throw new Error("Failed to fetch feature requests");
         }
@@ -130,11 +130,11 @@ export default function KanbanPage() {
       }
     };
 
-    if (projectId) {
+    if (organizationSlug) {
       fetchProjectDetails();
       fetchFeatureRequests();
     }
-  }, [projectId]);
+  }, [organizationSlug]);
 
   const onDragEnd = async (result: any) => {
     const { destination, source, draggableId } = result;

@@ -1,21 +1,35 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db"; // Ensure this is the correct import for your Drizzle setup
 import { feature_request } from "@/db/schema"; // Import the feature request table from your schema
+import { organization } from "@/db/schema"; // Import the organization table from your schema
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 export async function POST(req: Request) {
   try {
-    const { projectId, title, description, category } = await req.json();
+    const { organizationSlug, title, description, category } = await req.json();
 
     // Validate required fields
-    if (!projectId || typeof projectId !== "string" || !title || typeof title !== "string") {
-      return NextResponse.json({ error: "Invalid request body. 'projectId' and 'title' are required." }, { status: 400 });
+    if (!organizationSlug || typeof organizationSlug !== "string" || !title || typeof title !== "string") {
+      return NextResponse.json({ error: "Invalid request body. 'organizationSlug' and 'title' are required." }, { status: 400 });
     }
+
+    // Query the organization to get the organizationId from the slug
+    const orgResult = await db
+      .select({ id: organization.id })
+      .from(organization)
+      .where(eq(organization.slug, organizationSlug))
+      .limit(1);
+
+    if (!orgResult.length) {
+      return NextResponse.json({ error: "Invalid 'organizationSlug'." }, { status: 400 });
+    }
+
+    const organizationId = orgResult[0].id;
 
     // Insert new feature request record
     const result = await db.insert(feature_request).values({
-      projectId,
+      organizationId,
       title,
       description,
       category,
@@ -33,16 +47,29 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const projectId = searchParams.get("projectId");
+    const organizationSlug = searchParams.get("organizationSlug");
 
-    if (!projectId) {
-      return NextResponse.json({ error: "Missing 'projectId' query parameter." }, { status: 400 });
+    if (!organizationSlug) {
+      return NextResponse.json({ error: "Missing 'organizationSlug' query parameter." }, { status: 400 });
     }
+
+    // Query the organization to get the organizationId from the slug
+    const orgResult = await db
+      .select({ id: organization.id })
+      .from(organization)
+      .where(eq(organization.slug, organizationSlug))
+      .limit(1);
+
+    if (!orgResult.length) {
+      return NextResponse.json({ error: "Invalid 'organizationSlug'." }, { status: 400 });
+    }
+
+    const organizationId = orgResult[0].id;
 
     const featureRequests = await db
       .select()
       .from(feature_request)
-      .where(eq(feature_request.projectId, projectId));
+      .where(eq(feature_request.organizationId, organizationId));
 
     return NextResponse.json({ featureRequests }, { status: 200 });
   } catch (error) {

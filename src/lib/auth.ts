@@ -1,8 +1,9 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/db";
-import { user, session, account, verification } from "@/db/schema";
+import { user, session, account, verification, member, invitation, organization } from "@/db/schema";
 import { nextCookies } from "better-auth/next-js";
+import { organization as orgPlugin } from "better-auth/plugins/organization";
 
 // Determine environment
 const isProduction = process.env.NODE_ENV === "production";
@@ -19,6 +20,9 @@ export const auth = betterAuth({
             session,
             account,
             verification,
+            member,
+            invitation,
+            organization
         },
     }),
     session: {
@@ -40,5 +44,5 @@ export const auth = betterAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string, 
         }, 
     },
-    plugins: [nextCookies()],
+    plugins: [nextCookies(), orgPlugin()],
 });

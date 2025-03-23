@@ -60,7 +60,7 @@ function NewPostDialog() {
   const [type, setType] = useState<'feature' | 'bug'>('feature')
   const [category, setCategory] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { projectId } = useParams<{ projectId: string }>()
+  const { organizationSlug } = useParams<{ organizationSlug: string }>()
 
   const handleSubmit = async () => {
     if (!title || !description || !category) {
@@ -76,7 +76,7 @@ function NewPostDialog() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          projectId,
+          organizationSlug,
           title,
           description,
           type,
@@ -175,7 +175,7 @@ function NewPostDialog() {
 }
 
 export default function IdeaBoardPage() {
-  const { projectId } = useParams<{ projectId: string }>()
+  const { organizationSlug } = useParams<{ organizationSlug: string }>()
   const [projectName, setProjectName] = useState("")
   const [projectDescription, setProjectDescription] = useState("")
   const [items, setItems] = useState<FeatureRequest[]>([])
@@ -185,7 +185,7 @@ export default function IdeaBoardPage() {
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
-        const response = await fetch(`/api/projects/${projectId}`);
+        const response = await fetch(`/api/organization?slug=${organizationSlug}`);
         if (!response.ok) {
           throw new Error("Failed to fetch project details");
         }
@@ -203,7 +203,7 @@ export default function IdeaBoardPage() {
 
     const fetchFeatureRequests = async () => {
       try {
-        const response = await fetch(`/api/feature-requests?projectId=${projectId}`);
+        const response = await fetch(`/api/feature-requests?organizationSlug=${organizationSlug}`);
         if (!response.ok) {
           throw new Error("Failed to fetch feature requests");
         }
@@ -220,11 +220,11 @@ export default function IdeaBoardPage() {
       }
     };
 
-    if (projectId) {
+    if (organizationSlug) {
       fetchProjectDetails();
       fetchFeatureRequests();
     }
-  }, [projectId]);
+  }, [organizationSlug]);
 
   const mainContent = (
     <div className="flex-1 space-y-6 p-6">

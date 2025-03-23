@@ -81,7 +81,7 @@ function FeatureRequestCard({ feature }: { feature: Feature }) {
   );
 }
 
-function NewPostDialog({ projectId }: { projectId: string }) {
+function NewPostDialog({ organizationSlug }: { organizationSlug: string }) {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
@@ -102,7 +102,7 @@ function NewPostDialog({ projectId }: { projectId: string }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          projectId,
+          organizationSlug,
           title,
           description: content,
           category,
@@ -181,8 +181,8 @@ function NewPostDialog({ projectId }: { projectId: string }) {
 }
 
 export default function FeatureRequestsPage() {
-  const { projectId } = useParams<{ projectId: string }>();
-  const [projectName, setProjectName] = useState<string | null>(null);
+  const { organizationSlug } = useParams<{ organizationSlug: string }>();
+  const [organizationName, setorganizationName] = useState<string | null>(null);
   const [projectDescription, setProjectDescription] = useState<string | null>(null);
   const [featureRequests, setFeatureRequests] = useState<Feature[]>([]);
   const [loading, setLoading] = useState(true);
@@ -191,27 +191,27 @@ export default function FeatureRequestsPage() {
   useEffect(() => {
    const fetchProjectName = async () => {
       try {
-        const response = await fetch(`/api/projects?id=${projectId}`);
+        const response = await fetch(`/api/organization?slug=${organizationSlug}`);
         if (!response.ok) {
           throw new Error("Failed to fetch project name");
         }
         const data = await response.json();
-        setProjectName(data.project.name);
-        setProjectDescription(data.project.description);
+        setorganizationName(data.organization.name);
+        //setProjectDescription(data.project.description);
       } catch (err) {
         console.error("Error fetching project name:", err);
       }
     };
 
-    if (projectId) {
+    if (organizationSlug) {
       fetchProjectName();
     }
-  }, [projectId]);
+  }, [organizationSlug]);
 
   useEffect(() => {
     const fetchFeatureRequests = async () => {
       try {
-        const response = await fetch(`/api/feature-requests?projectId=${projectId}`);
+        const response = await fetch(`/api/feature-requests?organizationSlug=${organizationSlug}`);
         if (!response.ok) {
           throw new Error("Failed to fetch feature requests");
         }
@@ -228,10 +228,10 @@ export default function FeatureRequestsPage() {
       }
     };
 
-    if (projectId) {
+    if (organizationSlug) {
       fetchFeatureRequests();
     }
-  }, [projectId]);
+  }, [organizationSlug]);
 
   if (loading) {
     return <div className="text-center mt-4">Loading feature requests...</div>;
@@ -246,10 +246,10 @@ export default function FeatureRequestsPage() {
       <div className="container mx-auto p-6">
       <div className="mb-6 text-left flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">{projectName ? `${projectName}` : "Project"}</h1>
+          <h1 className="text-3xl font-bold">{organizationName ? `${organizationName}` : "Project"}</h1>
           <p className="text-muted-foreground">{projectDescription ? `${projectDescription}` : "This is the standard description"}</p>
         </div>
-        <NewPostDialog projectId={projectId} />
+        <NewPostDialog organizationSlug={organizationSlug} />
       </div>
 
       <div className="flex flex-col md:flex-row mt-6 gap-6">

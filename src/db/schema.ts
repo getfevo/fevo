@@ -64,7 +64,6 @@ export const project = pgTable("project", {
 				  
 export const feature_request = pgTable("feature_request", {
 					id: uuid("id").primaryKey().defaultRandom(),
-					projectId: uuid("project_id").notNull().references(() => project.id, { onDelete: 'cascade' }),
 					title: text("title").notNull(),
 					description: text("description"),
 					status: text("status"),
@@ -74,4 +73,32 @@ export const feature_request = pgTable("feature_request", {
 					createdBy: text("created_by").references(() => user.id, { onDelete: 'cascade' }),
 					createdAt: timestamp("created_at").notNull(),
 					updatedAt: timestamp("updated_at").notNull(),
+					organizationId: text("organization_id").references(() => organization.id, { onDelete: 'cascade' }),
 				  });
+
+				  export const organization = pgTable("organization", {
+					id: text("id").primaryKey(),
+					name: text('name').notNull(),
+ slug: text('slug').unique(),
+ logo: text('logo'),
+ createdAt: timestamp('created_at').notNull(),
+ metadata: text('metadata')
+				});
+
+export const member = pgTable("member", {
+					id: text("id").primaryKey(),
+					organizationId: text('organization_id').notNull().references(()=> organization.id, { onDelete: 'cascade' }),
+ userId: text('user_id').notNull().references(()=> user.id, { onDelete: 'cascade' }),
+ role: text('role').notNull(),
+ createdAt: timestamp('created_at').notNull()
+				});
+
+export const invitation = pgTable("invitation", {
+					id: text("id").primaryKey(),
+					organizationId: text('organization_id').notNull().references(()=> organization.id, { onDelete: 'cascade' }),
+ email: text('email').notNull(),
+ role: text('role'),
+ status: text('status').notNull(),
+ expiresAt: timestamp('expires_at').notNull(),
+ inviterId: text('inviter_id').notNull().references(()=> user.id, { onDelete: 'cascade' })
+				});

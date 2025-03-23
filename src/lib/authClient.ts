@@ -3,7 +3,7 @@ import { organizationClient } from "better-auth/client/plugins";
 import { toast } from "sonner";
 
 export const authClient = createAuthClient({
-  plugins: [],
+  plugins: [organizationClient()],
 });
 
-export const { useSession, signOut } = authClient;
+export const { useSession, signOut, useListOrganizations, useActiveOrganization} = authClient;

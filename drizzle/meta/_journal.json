@@ -78,6 +78,27 @@
       "when": 1742130123168,
       "tag": "0010_nebulous_thunderball",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1742734394498,
+      "tag": "0011_sloppy_scarlet_spider",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1742734463479,
+      "tag": "0012_perfect_avengers",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1742734506882,
+      "tag": "0013_slow_zarek",
+      "breakpoints": true
     }
   ]
 }

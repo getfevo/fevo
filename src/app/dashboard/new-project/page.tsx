@@ -23,17 +23,11 @@ export default function NewProjectPage() {
     const userId = session?.user.id; // Replace with actual user ID retrieval logic
 
     try {
-      const response = await fetch("/api/projects", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, name, description }),
-      });
+      const response = await authClient.organization.create({
+        name: name,
+        slug: name
+    })
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to create project");
-      }
 
       router.push("/dashboard");
     } catch (err) {
