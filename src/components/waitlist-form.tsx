@@ -5,7 +5,6 @@ import type React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { submitToWaitlist } from "@/app/actions"
 import { CheckCircle, Loader2 } from "lucide-react"
 
 interface WaitlistFormProps {
