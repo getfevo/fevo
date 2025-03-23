@@ -36,12 +36,12 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Sign In Button (Desktop) */}
+          {/* Sign In Button (Desktop) 
           <div className="hidden md:flex items-center gap-4">
             <Link href="/register" className="text-sm font-medium text-gray-600 hover:text-black">
               Sign In
             </Link>
-          </div>
+          </div>*/}
 
           {/* Hamburger Menu Button (Mobile) */}
           <button
@@ -81,13 +81,13 @@ export default function Header() {
               >
                 FAQ
               </Link>
-              <Link
+              {/*<Link
                 href="/register"
                 className="text-sm font-medium text-gray-600 hover:text-black py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Sign In
-              </Link>
+              </Link>*/}
             </nav>
           </div>
         </div>
