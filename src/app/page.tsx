@@ -201,7 +201,7 @@ export default function Home() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-white mt-10 rounded-2xl shadow-sm">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-white mt-10 rounded-2xl shadow-sm mb-10">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -221,7 +221,7 @@ export default function Home() {
         </main>
       </AuroraBackground>
 
-      <footer className="w-full border-t border-gray-200 bg-white py-6 md:py-12 mt-10">
+      <footer className="w-full border-t border-gray-200 bg-white py-6 md:py-12">
         <div className="container flex flex-col items-center justify-between gap-6 px-4 text-center md:text-left md:flex-row md:px-6">
           <div className="flex items-center gap-2">
             <Image src="/logo.png" alt="Fevo" width={300} height={100} className="h-20 w-auto" priority />
