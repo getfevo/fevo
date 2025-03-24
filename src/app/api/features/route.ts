@@ -40,12 +40,20 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
+    const { userId } = await req.json();
+
+    if (!userId)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    const user = await db.select().from(member).where(eq(member.userId, userId));
+    
+
     const { searchParams } = new URL(req.url);
     const organizationId = searchParams.get("organizationId");
 
     // Validate projectId
     if (!organizationId || typeof organizationId !== "string") {
-      return NextResponse.json({ error: "Invalid or missing 'projectId' parameter." }, { status: 400 });
+      return NextResponse.json({ error: "Invalid or missing 'organizationId' parameter." }, { status: 400 });
     }
 
     // Fetch feature requests for the given projectId
