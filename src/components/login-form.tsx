@@ -29,13 +29,15 @@ export function LoginForm({
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await authClient.signIn.email({
+      const result = await authClient.signIn.email({
         email: values.email,
         password: values.password,
         callbackURL: "/dashboard",
       });
-      toast.success("Login successful. Redirecting...");
-      //router.push(callbackUrl);
+      if (result.error) {
+        //throw new Error(result.error.message);
+        toast.error(result.error.message || "Invalid credentials. Please try again.");
+      }
     } catch (error: any) {
       console.error(error);
       toast.error(error.message || "Invalid credentials. Please try again.");
