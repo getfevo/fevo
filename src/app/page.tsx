@@ -1,15 +1,15 @@
 import WaitlistForm from "@/components/waitlist-form"
-import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import Header from "@/components/header"
-import FeatureRequestListLanding from "@/components/featureRequestListLanding"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import { AuroraBackground } from "@/components/ui/background"
+import { motion } from "motion/react"
+import { BellDotIcon, ChartNoAxesColumn, ChartNoAxesColumnIncreasing, MessagesSquare } from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100 ">
+    <div className="flex min-h-screen flex-col bg-gray-100">
       <AuroraBackground>
       <Header />
         {/* Hero Section */}
@@ -35,6 +35,76 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Bento Box Layout */}
+        <section className="w-full py-6 md:py-12 bg-white/30 backdrop-blur-md border-white/40 border mt-10 rounded-2xl shadow-sm">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {/* Main Feature */}
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white/50 md:col-span-2 md:row-span-2 hover:shadow-[0_10px_40px_rgb(0,0,0,0.12)] transition-all duration-300">
+                <div className="h-full flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4 text-black">Complete Feedback Ecosystem</h3>
+                    <p className="text-gray-600 mb-6">Our platform integrates collection, analysis, and implementation tracking in one seamless workflow.</p>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-200 to-gray-100 rounded-xl blur-sm opacity-75"></div>
+                    <Image src="/dashboard-preview.png" width={600} height={400} alt="Dashboard Preview" className="relative rounded-xl shadow-sm border border-white/70" />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Small Features */}
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 text-black mb-4 shadow-sm">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-black mb-2">Multi-channel Collection</h3>
+                <p className="text-gray-600">Gather feedback from your website, product, email, and social media in one place.</p>
+              </div>
+              
+              <div className="bg-black/90 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-gray-800/50 text-muted hover:shadow-[0_10px_40px_rgb(0,0,0,0.3)] transition-all duration-300">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-900 text-gray-200 mb-4 shadow-sm">
+                  <ChartNoAxesColumnIncreasing className="size-6" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Smart Prioritization</h3>
+                <p className="text-muted">AI-powered analysis to identify high-impact features based on user demand.</p>
+              </div>
+              
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 text-black mb-4 shadow-sm">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-black mb-2">Automated Updates</h3>
+                <p className="text-gray-600">Keep users informed about feature progress with customizable notifications.</p>
+              </div>
+              
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 text-black mb-4 shadow-sm">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-black mb-2">Developer-friendly</h3>
+                <p className="text-gray-600">Robust API and webhooks to integrate with your existing tools and workflows.</p>
+              </div>
+              
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300 group">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 text-black mb-4 shadow-sm group-hover:shadow-md transition-all duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="h-7 w-7">
+                    <path d="M50 0C22.4 0 0 22.4 0 50c0 22.1 14.3 40.8 34.2 47.4 2.5.5 3.4-1.1 3.4-2.4 0-1.2 0-4.3-.1-8.5-13.9 3-16.8-6.7-16.8-6.7-2.3-5.8-5.6-7.3-5.6-7.3-4.5-3.1.3-3 .3-3 5 .4 7.7 5.2 7.7 5.2 4.5 7.6 11.7 5.4 14.5 4.1.5-3.2 1.7-5.4 3.2-6.7-11.1-1.3-22.7-5.6-22.7-24.7 0-5.5 1.9-9.9 5.1-13.4-.5-1.3-2.2-6.3.5-13.2 0 0 4.2-1.3 13.7 5.1 4-1.1 8.3-1.7 12.5-1.7 4.2 0 8.5.6 12.5 1.7 9.5-6.5 13.7-5.1 13.7-5.1 2.7 6.9 1 12 .5 13.2 3.2 3.5 5.1 8 5.1 13.4 0 19.2-11.7 23.4-22.8 24.7 1.8 1.5 3.4 4.6 3.4 9.3 0 6.7-.1 12.1-.1 13.7 0 1.3.9 2.9 3.4 2.4C85.7 90.8 100 72.1 100 50 100 22.4 77.6 0 50 0z"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-black mb-2">Open Source</h3>
+                <p className="text-gray-600">Fully transparent codebase with MIT license. Contribute, customize, and self-host with complete freedom.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Features Section */}
         <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-white/30 backdrop-blur-md border-white/40 border mt-10 rounded-2xl shadow-sm">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -51,14 +121,7 @@ export default function Home() {
             <div className="mx-auto grid max-w-5xl items-center gap-8 py-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 text-black">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                    />
-                  </svg>
+                  <MessagesSquare className="size-6" />
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black">Feedback Collection</h3>
@@ -69,14 +132,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col justify-center space-y-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 text-black">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                    />
-                  </svg>
+                  <ChartNoAxesColumnIncreasing className="size-6" />
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black">Prioritization</h3>
@@ -87,14 +143,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col justify-center space-y-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 text-black">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                    />
-                  </svg>
+                  <BellDotIcon className="size-6" />
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black">User Updates</h3>
@@ -121,7 +170,7 @@ export default function Home() {
             </div>
             <div className="mx-auto grid max-w-5xl gap-8 py-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
               <div className="flex flex-col items-center text-center space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white">1</div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-muted">1</div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black">Join the waitlist</h3>
                   <p className="text-gray-500">
@@ -130,7 +179,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-col items-center text-center space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white">2</div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-muted">2</div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black">Get early access</h3>
                   <p className="text-gray-500">
@@ -139,7 +188,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-col items-center text-center space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white">3</div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-muted">3</div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black">Enjoy exclusive benefits</h3>
                   <p className="text-gray-500">
@@ -201,7 +250,7 @@ export default function Home() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-white mt-10 rounded-2xl shadow-sm mb-10">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-muted mt-10 rounded-2xl shadow-sm mb-10">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -245,4 +294,3 @@ export default function Home() {
     </div>
   )
 }
-
