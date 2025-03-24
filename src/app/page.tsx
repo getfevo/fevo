@@ -5,26 +5,24 @@ import Image from "next/image"
 import Header from "@/components/header"
 import FeatureRequestListLanding from "@/components/featureRequestListLanding"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+import { AuroraBackground } from "@/components/ui/background"
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-gray-100 ">
+      <AuroraBackground>
       <Header />
-      <main className="flex-1 self-center px-4 sm:px-6 md:px-8">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 bg-white mt-10 rounded-2xl shadow-sm">
-          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-8 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_550px]">
+        <main className="flex-1 z-10 self-center px-4 sm:px-6 md:px-8">
+        <section className="mt-10 lg:py-12">
+          <div className="container z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-[600px] mx-auto">
               <div className="flex flex-col justify-center space-y-4">
-                <div className="inline-flex items-center rounded-full border border-gray-300 text-gray-700 px-3 py-1 text-sm font-medium">
-                  <ArrowRight className="mr-1 h-4 w-4 text-gray-500" />
-                  Coming Soon...
-                </div>
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-black">
                     The open source way to collect feedback
                   </h1>
-                  <p className="max-w-[600px] text-gray-500 md:text-xl">
+                  <p className="text-gray-800 md:text-xl">
                     A fully customizable platform for individuals, businesses, and developers to gather and prioritize
                     user feedback.
                   </p>
@@ -33,30 +31,12 @@ export default function Home() {
                   <WaitlistForm />
                 </div>
               </div>
-              <div className="flex items-center justify-center">
-                <div className="relative w-full h-[400px] overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-                  <div className="absolute top-0 left-0 right-0 bg-gray-50 p-4 border-b border-gray-200">
-                    <div className="flex items-center">
-                      <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
-                        F
-                      </div>
-                      <div className="ml-3">
-                        <p className="font-medium">Feedback Portal</p>
-                        <p className="text-sm text-gray-500">Product Roadmap</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* ✅ Use the new FeatureRequestList component */}
-                  <FeatureRequestListLanding />
-                </div>
-              </div>
             </div>
           </div>
         </section>
 
         {/* Features Section */}
-        <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-white mt-10 rounded-2xl shadow-sm">
+        <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-white/30 backdrop-blur-md border-white/40 border mt-10 rounded-2xl shadow-sm">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -129,7 +109,7 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-white mt-10 rounded-2xl shadow-sm">
+        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-white/30 backdrop-blur-md border-white/40 border mt-10 rounded-2xl shadow-sm">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -172,7 +152,7 @@ export default function Home() {
         </section>
 
         {/*FAQ Section */}
-        <section id="faq" className="w-full py-12 md:py-20 lg:py-28 bg-gray-100 mt-10 rounded-2xl">
+        <section id="faq" className="w-full py-12 md:py-20 lg:py-28 bg-gray-100/30 backdrop-blur-md mt-10 shadow rounded-2xl">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-6 text-center">
               <div className="space-y-4">
@@ -238,8 +218,10 @@ export default function Home() {
             </div>
           </div>
         </section>
-      </main>
-      <footer className="w-full border-t border-gray-200 bg-white py-6 md:py-12">
+        </main>
+      </AuroraBackground>
+
+      <footer className="w-full border-t border-gray-200 bg-white py-6 md:py-12 mt-10">
         <div className="container flex flex-col items-center justify-between gap-6 px-4 text-center md:text-left md:flex-row md:px-6">
           <div className="flex items-center gap-2">
             <Image src="/logo.png" alt="Fevo" width={300} height={100} className="h-20 w-auto" priority />
