@@ -4,7 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { Analytics } from '@vercel/analytics/next';
 import { Toaster } from "@/components/ui/sonner"
-
+import { TRPCReactProvider } from "@/trpc/react";
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -22,7 +22,9 @@ export default function RootLayout({
       <head>
       </head>
       <body className={inter.className}>
+      <TRPCReactProvider>
         {children}
+        </TRPCReactProvider>
         <Toaster />
         <Analytics />
       </body>
