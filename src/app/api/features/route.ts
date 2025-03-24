@@ -1,10 +1,20 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db"; // Ensure this is the correct import for your Drizzle setup
-import { feature_request } from "@/db/schema"; // Import the feature table from your schema
+import { feature_request, member } from "@/db/schema"; // Import the feature table from your schema
 import { eq } from "drizzle-orm";
 
 export async function POST(req: Request) {
+  const { userId } = await req.json();
+
+  if (!userId) 
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   try {
+    const user = await db.select().from(member).where(eq(member.userId, userId));
+
+    if (user.length === 0)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
     const { organization_id, title, description } = await req.json();
 
     // Validate required fields

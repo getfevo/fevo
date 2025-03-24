@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db"; // Ensure this is the correct import for your Drizzle setup
-import { feature_request } from "@/db/schema"; // Import the feature request table from your schema
-import { organization } from "@/db/schema"; // Import the organization table from your schema
+import { feature_request, organization, member } from "@/db/schema"; // Import the feature request table from your schema
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -45,7 +44,17 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: Request) {
+  const { userId } = await req.json();
+
+  if (!userId)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   try {
+    const user = await db.select().from(member).where(eq(member.userId, userId));
+
+    if (user.length === 0)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
     const { searchParams } = new URL(req.url);
     const organizationSlug = searchParams.get("organizationSlug");
 
@@ -84,7 +93,17 @@ const updateFeatureRequestSchema = z.object({
 });
 
 export async function PATCH(req: Request) {
+  const { userId } = await req.json();
+
+  if (!userId)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   try {
+    const user = await db.select().from(member).where(eq(member.userId, userId));
+    
+    if (user.length === 0)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); 
+
     const body = await req.json();
     const { featureRequestId, status } = updateFeatureRequestSchema.parse(body);
 
