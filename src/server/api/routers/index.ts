@@ -1,6 +1,7 @@
 import { t } from "../trpc"
-
+import { createFeature } from "./features/createFeature"
 export const router = t.router({
-    domain: t.router({
+    features: t.router({
+        create: createFeature,
     }),
 })

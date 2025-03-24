@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { useParams } from "next/navigation";
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
+
 
 interface Feature {
   id: string;
@@ -86,6 +89,14 @@ function NewPostDialog({ organizationSlug }: { organizationSlug: string }) {
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const createFeature = api.features.create.useMutation({
+    onSuccess: async (data) => {
+      toast.success("Feature created successfully")
+    },
+    onError: (err) => {
+      toast.error(`We were not able to create a feature. Error:${err.message}`)
+    },
+  });
 
   const handleSubmit = async () => {
     if (!title || !category || !content) {
@@ -93,30 +104,15 @@ function NewPostDialog({ organizationSlug }: { organizationSlug: string }) {
       return;
     }
 
-    setLoading(true);
+    setLoading(true);  
 
     try {
-      const response = await fetch("/api/feature-requests", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          organizationSlug,
-          title,
-          description: content,
-          category,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to submit request");
-      }
-
-      alert("Feature request submitted successfully!");
-      setTitle("");
-      setCategory("");
-      setContent("");
+      createFeature.mutate({ 
+        organizationSlug,
+        title,
+        description: content,
+        category,
+       });
     } catch (error) {
       console.error("Error submitting feature request:", error);
       alert("An error occurred. Please try again.");
