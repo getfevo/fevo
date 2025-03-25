@@ -82,20 +82,10 @@ The dashboard is fully responsive with:
 - Adaptive component sizing
 - Breakpoint-specific optimizations
 
-## Getting Started
+## Local Development
 
-1. Install dependencies
-```bash
-pnpm install
-```
-
-2. Run the development server
-```bash
-pnpm dev
-
-```
-
-3. Open [http://localhost:3000](http://localhost:3000) to view the dashboard
+Here is our guide for [local development guide](.github/CONTRIBUTING.md)
 
 ## License
 
+This project is licensed under the [MIT License](https://github.com/getfevo/fevo?tab=MIT-1-ov-file).
