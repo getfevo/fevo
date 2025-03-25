@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { featureRequestSchema } from '../models/feature-request'
 
 
 export const featureRequestSubject = z.tuple([
@@ -9,7 +10,7 @@ export const featureRequestSubject = z.tuple([
     z.literal('delete'),
     z.literal('mark_as_done'),
   ]),
-  z.literal('feature_request'),
+  z.union([z.literal('feature_request'), featureRequestSchema]),
 ])
 
 export type FeatureRequestSubject = z.infer<typeof featureRequestSubject>

@@ -1,7 +1,7 @@
 import { defineAbilityFor } from '@/perms'
-import { type Role } from '@/perms/roles'
+import type { User } from '@/perms/models/user'
 
-export function getUserPermissions(user: { id: string; role: Role }) {
+export function getUserPermissions(user: User) {
   const ability = defineAbilityFor(user)
 
   return ability

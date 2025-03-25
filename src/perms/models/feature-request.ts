@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-export const feedbackSchema = z.object({
-  __typename: z.literal('feedback'),
+export const featureRequestSchema = z.object({
+  __typename: z.literal('feature_request'),
   id: z.string(),
   topic: z.union([
     z.literal('developer'),

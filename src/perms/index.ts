@@ -13,6 +13,7 @@ import { orgSubject } from './subjects/org'
 import { userSubject } from './subjects/user'
 import { featureRequestSubject } from './subjects/feature-request'
 import { feedbackSubject } from './subjects/feedbacks'
+import type { User } from './models/user'
 
 const appAbilitiesSchema = z.union([
   userSubject,
@@ -27,7 +28,7 @@ type AppAbilities = z.infer<typeof appAbilitiesSchema>
 export type AppAbility = MongoAbility<AppAbilities>
 export const createAppAbility = createMongoAbility as CreateAbility<AppAbility>
 
-export function defineAbilityFor(user: { id: string; role: Role }) {
+export function defineAbilityFor(user: User) {
   const builder = new AbilityBuilder(createAppAbility)
 
   if (typeof permissions[user.role] !== 'function')
