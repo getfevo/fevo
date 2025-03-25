@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.17",
+    "@casl/ability": "^6.7.3",
     "@hello-pangea/dnd": "^18.0.1",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-avatar": "^1.1.3",
