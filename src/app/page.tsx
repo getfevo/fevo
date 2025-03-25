@@ -36,11 +36,11 @@ export default function Home() {
         </section>
 
         {/* Bento Box Layout */}
-        <section className="w-full py-6 md:py-12 bg-white/30 backdrop-blur-md border-white/40 border mt-10 rounded-2xl shadow-sm">
+        <section className="w-full py-6 md:py-12 mt-10 rounded-2xl">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {/* Main Feature */}
-              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white/50 md:col-span-2 md:row-span-2 hover:shadow-[0_10px_40px_rgb(0,0,0,0.12)] transition-all duration-300">
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white/50 md:col-span-2 md:row-span-2 hover:shadow-[0_10px_40px_rgb(0,0,0,0.12)] transition-all duration-300 hover:bg-white/60">
                 <div className="h-full flex flex-col justify-between">
                   <div>
                     <h3 className="text-2xl font-bold mb-4 text-black">Complete Feedback Ecosystem</h3>
@@ -54,7 +54,7 @@ export default function Home() {
               </div>
               
               {/* Small Features */}
-              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300">
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300 hover:bg-white/60">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 text-black mb-4 shadow-sm">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -64,7 +64,7 @@ export default function Home() {
                 <p className="text-gray-600">Gather feedback from your website, product, email, and social media in one place.</p>
               </div>
               
-              <div className="bg-black/90 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-gray-800/50 text-muted hover:shadow-[0_10px_40px_rgb(0,0,0,0.3)] transition-all duration-300">
+              <div className="bg-black/90 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-gray-800/50 text-muted hover:shadow-[0_10px_40px_rgb(0,0,0,0.3)] transition-all duration-300 hover:bg-black">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-900 text-gray-200 mb-4 shadow-sm">
                   <ChartNoAxesColumnIncreasing className="size-6" />
                 </div>
@@ -72,7 +72,7 @@ export default function Home() {
                 <p className="text-muted">AI-powered analysis to identify high-impact features based on user demand.</p>
               </div>
               
-              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300">
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300 hover:bg-white/60">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 text-black mb-4 shadow-sm">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -82,7 +82,7 @@ export default function Home() {
                 <p className="text-gray-600">Keep users informed about feature progress with customizable notifications.</p>
               </div>
               
-              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300">
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300 hover:bg-white/60">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 text-black mb-4 shadow-sm">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
