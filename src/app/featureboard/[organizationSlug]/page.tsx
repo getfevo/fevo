@@ -11,18 +11,32 @@ import { api } from "@/trpc/react";
 import { toast } from "sonner";
 
 
-interface Feature {
+type Feature = {
   id: string;
-  votes: number;
   title: string;
-  description: string;
-  category: string;
-  status: string;
-}
+  description: string | null;
+  status: string | null;
+  priority: number | null;
+  votes: number | null; 
+  category: string | null;
+  createdBy: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  organizationId: string | null;
+};
+
 
 function FeatureRequestCard({ feature }: { feature: Feature }) {
   const [votes, setVotes] = useState(feature.votes);
   const [hasVoted, setHasVoted] = useState(false);
+  const updateVotes = api.features.updateVotes.useMutation({
+    onSuccess: async () => {
+      toast.success("Upvoted!")
+    },
+    onError: (err) => {
+      toast.error(`We were not able to create a feature. Error:${err.message}`)
+    },
+  });
 
   useEffect(() => {
     const votedRequests = JSON.parse(localStorage.getItem("votedFeatureRequests") || "[]");
@@ -33,20 +47,8 @@ function FeatureRequestCard({ feature }: { feature: Feature }) {
     if (hasVoted) return;
 
     try {
-      const response = await fetch("/api/feature-requests", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ featureRequestId: feature.id }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to upvote feature request");
-      }
-
-      const data = await response.json();
-      setVotes(data.featureRequest.votes);
+      const data = await updateVotes.mutateAsync({ featureRequestId: feature.id });
+      setVotes(data.featureRequest.votes!);
       setHasVoted(true);
 
       const votedRequests = JSON.parse(localStorage.getItem("votedFeatureRequests") || "[]");
@@ -183,6 +185,14 @@ export default function FeatureRequestsPage() {
   const [featureRequests, setFeatureRequests] = useState<Feature[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const getFeatures = api.features.get.useMutation({
+        onSuccess: async () => {
+          toast.success("Fetched all features!")
+        },
+        onError: (err) => {
+          toast.error(`We were not able to fetch features. Error:${err.message}`)
+        },
+    });
 
   useEffect(() => {
    const fetchProjectName = async () => {
@@ -207,12 +217,8 @@ export default function FeatureRequestsPage() {
   useEffect(() => {
     const fetchFeatureRequests = async () => {
       try {
-        const response = await fetch(`/api/feature-requests?organizationSlug=${organizationSlug}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch feature requests");
-        }
-        const data = await response.json();
-        setFeatureRequests(data.featureRequests);
+        const response = await getFeatures.mutateAsync({ organizationSlug });
+        setFeatureRequests(response.requests);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);

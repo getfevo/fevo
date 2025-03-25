@@ -50,19 +50,24 @@ import {
   TrendingUpIcon as Trending,
   Users,
 } from "lucide-react"
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
 
-// Define interfaces
-interface FeatureRequest {
+type FeatureRequest = {
   id: string;
   title: string;
-  description: string;
-  createdAt: string;
-  status: string;
-  category: string;
-  votes: number;
+  description: string | null; // Allow null
+  status: string | null;
+  priority: number | null;
+  votes: number | null;
+  category: string | null;
+  createdBy: string | null;
+  createdAt: Date;
+  updatedAt: Date;
   comments?: number; // This might not be in the database, we'll calculate it
   progress?: number; // For progress bars on in-progress items
-}
+  organizationId: string | null;
+};
 
 interface StatItem {
   title: string;
@@ -102,6 +107,14 @@ export default function DashboardPage() {
   const [topFeatures, setTopFeatures] = useState<FeatureRequest[]>([]);
   const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
   const [timeframe, setTimeframe] = useState("7days");
+  const getFeatures = api.features.get.useMutation({
+      onSuccess: async () => {
+        toast.success("Fetched all features!")
+      },
+      onError: (err) => {
+        toast.error(`We were not able to fetch features. Error:${err.message}`)
+      },
+  });
 
   useEffect(() => {
     if (!organizationSlug) return;
@@ -126,12 +139,9 @@ export default function DashboardPage() {
 
     const fetchFeatureRequests = async () => {
       try {
-        const response = await fetch(`/api/feature-requests?organizationSlug=${organizationSlug}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch feature requests");
-        }
-        const data = await response.json();
-        const requests = data.featureRequests || [];
+        // We'll switch to RSC later for now let's use a mutation
+        const response = await getFeatures.mutateAsync({ organizationSlug });
+        const requests = response.requests || [];
         setFeatureRequests(requests);
         
         // Calculate statistics
