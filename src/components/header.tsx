@@ -13,7 +13,7 @@ export default function Header() {
   }
 
   return (
-    <header className="relative">
+    <header className="relative w-full">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-24 items-center justify-between">
           {/* Logo */}
