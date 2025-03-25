@@ -10,16 +10,25 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { useParams } from "next/navigation";
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
+import { updateStatus } from "@/server/api/routers/features/updateStatus";
 
-interface FeatureRequest {
+
+type FeatureRequest = {
   id: string;
   title: string;
-  description: string;
-  createdAt: string;
-  status: string;
-  category: string;
-  votes: number;
-}
+  description: string | null; 
+  status: string | null;
+  priority: number | null;
+  votes: number | null;
+  category: string | null;
+  createdBy: string | null;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  organizationId: string | null;
+};
+
 
 interface Column {
   id: string;
@@ -65,6 +74,23 @@ export default function KanbanPage() {
     },
     columnOrder: ["new", "not-started", "in-progress", "completed"],
   });
+  const updateStatus = api.features.updateStatus.useMutation({
+      onSuccess: async () => {
+        toast.success("Status updated!")
+      },
+      onError: (err) => {
+        toast.error(`We were not able to update the status. Error:${err.message}`)
+      },
+  });
+
+    const getFeatures = api.features.get.useMutation({
+          onSuccess: async () => {
+            toast.success("Fetched all features!")
+          },
+          onError: (err) => {
+            toast.error(`We were not able to fetch features. Error:${err.message}`)
+          },
+      });
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -87,33 +113,30 @@ export default function KanbanPage() {
 
     const fetchFeatureRequests = async () => {
       try {
-        const response = await fetch(`/api/feature-requests?organizationSlug=${organizationSlug}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch feature requests");
-        }
-        const data = await response.json();
-    
+
+        const data = await getFeatures.mutateAsync({ organizationSlug });
+        
         // Ensure all columns exist in the board
         const newBoard = {
           ...board,
           columns: {
             new: {
               ...board.columns.new,
-              tasks: data.featureRequests?.filter((fr: FeatureRequest) =>
+              tasks: data.requests?.filter((fr: FeatureRequest) =>
                 fr.status === "new" || fr.status === null || fr.status === undefined
               ) || [],
             },
             "not-started": {
               ...board.columns["not-started"],
-              tasks: data.featureRequests?.filter((fr: FeatureRequest) => fr.status === "not-started") || [],
+              tasks: data.requests?.filter((fr: FeatureRequest) => fr.status === "not-started") || [],
             },
             "in-progress": {
               ...board.columns["in-progress"],
-              tasks: data.featureRequests?.filter((fr: FeatureRequest) => fr.status === "in-progress") || [],
+              tasks: data.requests?.filter((fr: FeatureRequest) => fr.status === "in-progress") || [],
             },
             completed: {
               ...board.columns.completed,
-              tasks: data.featureRequests?.filter((fr: FeatureRequest) => fr.status === "completed") || [],
+              tasks: data.requests?.filter((fr: FeatureRequest) => fr.status === "completed") || [],
             },
           },
         };
@@ -203,19 +226,10 @@ export default function KanbanPage() {
 
     // Update the task status in the backend
     try {
-      const response = await fetch(`/api/feature-requests?id=${draggableId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          status: destination.droppableId === 'new' ? null : destination.droppableId,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update task status');
-      }
+      updateStatus.mutate({
+        status: destination.droppableId === 'new' ? null : destination.droppableId,
+        draggableId: draggableId
+      })
     } catch (error) {
       console.error('Error updating task status:', error);
       // You might want to show an error message to the user
