@@ -1,0 +1,36 @@
+- V1
+    - [ ]  Implement RBAC/ABAC to orgs, responses, and etc
+    - [ ]  Create a Public Roadmap Visualization
+    - [ ]  Enhance the dashboard with analytics and a saparate area to responde user's feedbacks and feature requests (we can use [Linear](https://linear.app) as inspiration)
+    - [ ]  Implement tagging system for categorizing feedback
+    - [ ]  Add voting/upvoting mechanism for feature prioritization
+    - [ ]  create customizable status workflows (planned, in-progress, completed, etc.)
+    - [ ]  develop notification system for status updates
+    - [ ]  Implement basic integration with Linear/Github Issues
+    - [ ]  Develop SDK and base feedback/feature request components for Vue and React
+
+- V2
+    - [ ]  Build comprehensive api for third-party integrations
+    - [ ]  Create webhook system for popular tools (slack, discord, notion)
+    - [ ]  Implement custom fields for detailed feedback collection
+    - [ ]  Develop user reputation/contribution scoring
+    - [ ]  Add advanced analytics dashboard with feedback trends
+    - [ ]  Create automated changelog generation from completed items
+
+- V3
+    - [ ]  Implement ai-powered feedback clustering and analysis
+    - [ ]  Develop advanced theming and white-labeling options
+    - [ ]  Create feedback collection widgets for embedding in other applications
+    - [ ]  Build plugin/extension system for community contributions
+    - [ ]  Implement advanced team collaboration features
+    - [ ]  Develop feedback-to-roadmap automation toolsadd
+    - [ ]  Multi-language support for global teams
+
+- V4
+    - [ ]  Create enterprise-grade security features
+    - [ ]  Implement advanced data visualization for product insights
+    - [ ]  Develop customer journey mapping based on feedback
+    - [ ]  Build sentiment analysis for qualitative feedback
+    - [ ]  Create integration marketplace for third-party extensions
+    - [ ]  Implement advanced user segmentation for targeted feedback collection
+    - [ ]  Develop comprehensive feedback lifecycle management
