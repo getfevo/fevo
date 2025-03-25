@@ -4,7 +4,6 @@ import Image from "next/image"
 import Header from "@/components/header"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import { AuroraBackground } from "@/components/ui/background"
-import { motion } from "motion/react"
 import { BellDotIcon, ChartNoAxesColumn, ChartNoAxesColumnIncreasing, MessagesSquare } from "lucide-react"
 
 export default function Home() {
@@ -14,7 +13,7 @@ export default function Home() {
       <Header />
         {/* Hero Section */}
         <main className="flex-1 z-10 self-center px-4 sm:px-6 md:px-8">
-        <section className="mt-10 lg:py-12">
+        <section className="mt-10 py-12 md:py-24 lg:py-32">
           <div className="container z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-[600px] mx-auto">
               <div className="flex flex-col justify-center space-y-4">
@@ -36,7 +35,7 @@ export default function Home() {
         </section>
 
         {/* Bento Box Layout */}
-        <section className="w-full py-6 md:py-12 mt-10 rounded-2xl">
+        <section className="w-full py-12 md:py-24 lg:py-32 mt-10 rounded-2xl">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {/* Main Feature */}
@@ -158,7 +157,7 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-white/30 backdrop-blur-md border-white/40 border mt-10 rounded-2xl shadow-sm">
+        <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 mt-10">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -169,8 +168,8 @@ export default function Home() {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl gap-8 py-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-              <div className="flex flex-col items-center text-center space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-muted">1</div>
+            <div className="flex flex-col items-center text-center bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300 group hover:bg-white/60">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-muted mb-2">1</div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black">Join the waitlist</h3>
                   <p className="text-gray-500">
@@ -178,8 +177,8 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col items-center text-center space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-muted">2</div>
+              <div className="flex flex-col items-center text-center bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300 group hover:bg-white/60">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-muted mb-2">2</div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black">Get early access</h3>
                   <p className="text-gray-500">
@@ -187,8 +186,8 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col items-center text-center space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-muted">3</div>
+              <div className="flex flex-col items-center text-center bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300 group hover:bg-white/60">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-muted mb-2">3</div>
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold text-black">Enjoy exclusive benefits</h3>
                   <p className="text-gray-500">
@@ -201,12 +200,13 @@ export default function Home() {
         </section>
 
         {/*FAQ Section */}
-        <section id="faq" className="w-full py-12 md:py-20 lg:py-28 bg-gray-100/30 backdrop-blur-md mt-10 shadow rounded-2xl">
-          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col items-center justify-center space-y-6 text-center">
+        <section id="faq" className="w-full py-12 md:py-24 lg:py-32 mt-10">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex lg:flex-row flex-col items-center lg:items-start mb-auto">
+            <div className="flex flex-col space-y-6 lg:w-1/3 w-full lg:mb-0 mb-10">
               <div className="space-y-4">
+                <small className="font-bold text-gray-400">FAQ</small>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-black">
-                  Frequently asked questions
+                  Frequently Asked Questions.
                 </h2>
                 <p className="max-w-[1000px] text-gray-500 md:text-xl lg:text-lg xl:text-xl">
                   Everything you need to know about our upcoming platform.
@@ -215,7 +215,7 @@ export default function Home() {
             </div>
 
             {/* Accordion FAQ */}
-            <div className="mx-auto max-w-4xl py-12">
+            <div className="ml-auto lg:w-3/5 w-full">
               <Accordion type="single" collapsible>
                 {[
                   {
@@ -241,7 +241,7 @@ export default function Home() {
                 ].map((item, i) => (
                   <AccordionItem key={i} value={`item-${i}`}>
                     <AccordionTrigger className="text-lg font-medium cursor-pointer">{item.question}</AccordionTrigger>
-                    <AccordionContent className="text-gray-700 text-base">{item.answer}</AccordionContent>
+                    <AccordionContent className="text-gray-700 text-base pb-6">{item.answer}</AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
@@ -250,7 +250,7 @@ export default function Home() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-muted mt-10 rounded-2xl shadow-sm mb-10">
+        <section className="w-full py-12 md:py-24 lg:py-32 mt-12 md:mt-24 lg:mt-32 bg-black text-muted rounded-2xl shadow-sm mb-10">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
