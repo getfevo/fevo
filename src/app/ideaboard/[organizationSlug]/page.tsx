@@ -11,16 +11,25 @@ import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/s
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Search } from "lucide-react"
+import { api } from "@/trpc/react"
+import { toast } from "sonner"
 
-interface FeatureRequest {
-  id: string
-  title: string
-  description: string
-  createdAt: string
-  status: string
-  category: string;
-  votes: number
-}
+
+type FeatureRequest = {
+  id: string;
+  title: string;
+  description: string | null; // Allow null
+  status: string | null;
+  priority: number | null;
+  votes: number | null;
+  category: string | null;
+  createdBy: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  comments?: number; // This might not be in the database, we'll calculate it
+  progress?: number; // For progress bars on in-progress items
+  organizationId: string | null;
+};
 
 function FeatureRequestCard({ item }: { item: FeatureRequest, onVote: (id: string) => void }) {
   return (
@@ -61,6 +70,14 @@ function NewPostDialog() {
   const [category, setCategory] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { organizationSlug } = useParams<{ organizationSlug: string }>()
+  const createFeature = api.features.create.useMutation({
+    onSuccess: async (data) => {
+      toast.success("Feature created successfully")
+    },
+    onError: (err) => {
+      toast.error(`We were not able to create a feature. Error:${err.message}`)
+    },
+  });
 
   const handleSubmit = async () => {
     if (!title || !description || !category) {
@@ -70,28 +87,17 @@ function NewPostDialog() {
 
     setIsSubmitting(true)
     try {
-      const response = await fetch('/api/feature-requests', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          organizationSlug,
-          title,
-          description,
-          type,
-          category,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to create feature request')
-      }
+      createFeature.mutate({ 
+        organizationSlug,
+        title,
+        description,
+        category,
+       });
 
       // Reset form
       setTitle("")
       setDescription("")
-      setType('feature')
+      setType(type)
       setCategory("")
       
       // Close dialog and refresh data
@@ -181,6 +187,15 @@ export default function IdeaBoardPage() {
   const [items, setItems] = useState<FeatureRequest[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null);
+  const getFeatures = api.features.get.useMutation({
+        onSuccess: async () => {
+          toast.success("Fetched all features!")
+        },
+        onError: (err) => {
+          toast.error(`We were not able to fetch features. Error:${err.message}`)
+        },
+    });
+  
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -203,12 +218,9 @@ export default function IdeaBoardPage() {
 
     const fetchFeatureRequests = async () => {
       try {
-        const response = await fetch(`/api/feature-requests?organizationSlug=${organizationSlug}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch feature requests");
-        }
-        const data = await response.json();
-        setItems(data.featureRequests || []);
+        const response = await getFeatures.mutateAsync({ organizationSlug });
+        const data = response.requests
+        setItems(data ?? []);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -248,7 +260,7 @@ export default function IdeaBoardPage() {
               {items.length > 0 ? (
                 items
                   .slice()
-                  .sort((a, b) => b.votes - a.votes)
+                  .sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0))
                   .map(item => <FeatureRequestCard key={item.id} item={item} onVote={(id) => console.log(`Voted for ${id}`)} />)
               ) : (
                 <p className="text-center text-gray-500">No feature requests found.</p>
@@ -260,7 +272,7 @@ export default function IdeaBoardPage() {
               {items.filter(item => item.category === 'feature').length > 0 ? (
                 items
                   .filter(item => item.category === 'feature')
-                  .sort((a, b) => b.votes - a.votes)
+                  .sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0))
                   .map(item => <FeatureRequestCard key={item.id} item={item} onVote={(id) => console.log(`Voted for ${id}`)} />)
               ) : (
                 <p className="text-center text-gray-500">No feature requests found.</p>
@@ -272,7 +284,7 @@ export default function IdeaBoardPage() {
               {items.filter(item => item.category === 'bug').length > 0 ? (
                 items
                   .filter(item => item.category === 'bug')
-                  .sort((a, b) => b.votes - a.votes)
+                  .sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0))
                   .map(item => <FeatureRequestCard key={item.id} item={item} onVote={(id) => console.log(`Voted for ${id}`)} />)
               ) : (
                 <p className="text-center text-gray-500">No bug reports found.</p>
