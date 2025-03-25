@@ -240,7 +240,7 @@ export default function Home() {
                   },
                 ].map((item, i) => (
                   <AccordionItem key={i} value={`item-${i}`}>
-                    <AccordionTrigger className="text-lg font-medium">{item.question}</AccordionTrigger>
+                    <AccordionTrigger className="text-lg font-medium cursor-pointer">{item.question}</AccordionTrigger>
                     <AccordionContent className="text-gray-700 text-base">{item.answer}</AccordionContent>
                   </AccordionItem>
                 ))}
