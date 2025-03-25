@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "local": "pnpm run db:migrate && pnpm run db:start && next dev --turbopack",
+    "db:start": "docker-compose up -d",
+    "db:stop": "docker-compose down",
+    "db:reset": "docker-compose down && docker volume rm fevo_pgdata && docker-compose up -d",
+    "db:push": "drizzle-kit push",
+    "db:migrate": "drizzle-kit generate && drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
     "dev": "next dev --turbopack ",
     "build": "next build",
     "start": "next start",

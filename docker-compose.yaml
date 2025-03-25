@@ -1,19 +1,17 @@
-version: '3.9'
+name: fevo-dev
 
 services:
-  db:
-    container_name: fevo-db
-    image: postgres:15
-    restart: unless-stopped
+  postgres:
+    image: postgres:16
+    container_name: fevo-dev
+    restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: fevo
-    ports:
-      - "5432:5432"
+      - POSTGRES_USER=fevo
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=fevo
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
+      - database:/var/lib/postgresql/data
+    ports:
+      - "54320:5432"
 volumes:
-  pgdata:
-    driver: local
+  database:
