@@ -92,7 +92,7 @@ export default function Home() {
                 <p className="text-gray-600">Robust API and webhooks to integrate with your existing tools and workflows.</p>
               </div>
               
-              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300 group">
+              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 hover:shadow-[0_10px_30px_rgb(0,0,0,0.1)] transition-all duration-300 group hover:bg-white/60">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 text-black mb-4 shadow-sm group-hover:shadow-md transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="h-7 w-7">
                     <path d="M50 0C22.4 0 0 22.4 0 50c0 22.1 14.3 40.8 34.2 47.4 2.5.5 3.4-1.1 3.4-2.4 0-1.2 0-4.3-.1-8.5-13.9 3-16.8-6.7-16.8-6.7-2.3-5.8-5.6-7.3-5.6-7.3-4.5-3.1.3-3 .3-3 5 .4 7.7 5.2 7.7 5.2 4.5 7.6 11.7 5.4 14.5 4.1.5-3.2 1.7-5.4 3.2-6.7-11.1-1.3-22.7-5.6-22.7-24.7 0-5.5 1.9-9.9 5.1-13.4-.5-1.3-2.2-6.3.5-13.2 0 0 4.2-1.3 13.7 5.1 4-1.1 8.3-1.7 12.5-1.7 4.2 0 8.5.6 12.5 1.7 9.5-6.5 13.7-5.1 13.7-5.1 2.7 6.9 1 12 .5 13.2 3.2 3.5 5.1 8 5.1 13.4 0 19.2-11.7 23.4-22.8 24.7 1.8 1.5 3.4 4.6 3.4 9.3 0 6.7-.1 12.1-.1 13.7 0 1.3.9 2.9 3.4 2.4C85.7 90.8 100 72.1 100 50 100 22.4 77.6 0 50 0z"/>
