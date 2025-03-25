@@ -1,0 +1,36 @@
+- V1
+    - [ ]  - Implement RBAC/ABAC to orgs, responses, and etc
+    - [ ]  - create a Public Roadmap Visualization
+    - [ ]  - Enhance the dashboard with analytics and a saparate area to responde user's feedbacks and feature requests (we can use [Linear](https://linear.app) as inspiration)
+    - [ ]  implement tagging system for categorizing feedback
+    - [ ]  add voting/upvoting mechanism for feature prioritization
+    - [ ]  create customizable status workflows (planned, in-progress, completed, etc.)
+    - [ ]  develop notification system for status updates
+    - [ ]  implement basic integration with Linear/Github Issues
+    - [ ]  Develop SDK and base feedback/feature request components for Vue and React
+
+- V2
+    - [ ]  build comprehensive api for third-party integrations
+    - [ ]  create webhook system for popular tools (slack, discord, notion)
+    - [ ]  implement custom fields for detailed feedback collection
+    - [ ]  develop user reputation/contribution scoring
+    - [ ]  add advanced analytics dashboard with feedback trends
+    - [ ]  create automated changelog generation from completed items
+
+- V3
+    - [ ]  implement ai-powered feedback clustering and analysis
+    - [ ]  develop advanced theming and white-labeling options
+    - [ ]  create feedback collection widgets for embedding in other applications
+    - [ ]  build plugin/extension system for community contributions
+    - [ ]  implement advanced team collaboration features
+    - [ ]  develop feedback-to-roadmap automation toolsadd
+    - [ ]  multi-language support for global teams
+
+- V4
+    - [ ]  create enterprise-grade security features
+    - [ ]  implement advanced data visualization for product insights
+    - [ ]  develop customer journey mapping based on feedback
+    - [ ]  build sentiment analysis for qualitative feedback
+    - [ ]  create integration marketplace for third-party extensions
+    - [ ]  implement advanced user segmentation for targeted feedback collection
+    - [ ]  develop comprehensive feedback lifecycle management
